@@ -39,7 +39,6 @@ class NavigationState extends State<Navigation> {
         ],
       ),
       body: <Widget>[
-        /// Home page
         const Home(),
         const All(),
         const Settings(),
