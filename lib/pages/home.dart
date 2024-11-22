@@ -23,6 +23,10 @@ class _HomeState extends State<Home> {
             children: [
                 Container(
                   margin: const EdgeInsets.all(12),
+                  child: Text('👋Hello, ${Hive.box('medication').get(2)}', style: const TextStyle(fontSize: 35.0),),
+                ),
+                Container(
+                  margin: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 240, 232, 230), // Background color of the box
                     borderRadius: BorderRadius.circular(14), // Rounded corners
