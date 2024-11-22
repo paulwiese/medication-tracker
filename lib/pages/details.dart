@@ -29,14 +29,20 @@ class DetailScreenState extends State<DetailScreen> {
 
   double space = 25;
 
+  var box = Hive.box('medication');
+  int index = 0;
+
   @override
   void initState() {
     super.initState();
-    medication = List<Medication>.from(Hive.box('medication').get(0));
+
+    medication = List<Medication>.from(box.get(0));
 
     for(int i = 0; i < medication.length; i++) {
       if(medication[i].id == widget.id) {
         m = medication[i];
+        index = i;
+        break;
       }
     }
 
@@ -69,6 +75,7 @@ class DetailScreenState extends State<DetailScreen> {
                   m.stock = (_stockController.text.isEmpty || int.tryParse(_stockController.text) == null) ? 0 : int.parse(_stockController.text);
                   m.started = started;
                   m.total = total;
+                  box.put(index,medication);
                   widget.update();
                 });
               },
