@@ -26,6 +26,12 @@ class Medication extends HiveObject {
   @HiveField(6)
   int stock;
 
+  @HiveField(7)
+  DateTime started;
+
+  @HiveField(8)
+  int total;
+
   Medication({
     required this.id,
     required this.name,
@@ -34,6 +40,8 @@ class Medication extends HiveObject {
     required this.last,
     required this.next,
     required this.stock,
+    required this.started,
+    required this.total,
   });
 
 }

@@ -29,7 +29,7 @@ class NavigationState extends State<Navigation> {
             label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.notifications_sharp),
+            icon: Icon(Icons.list),
             label: 'All',
           ),
           NavigationDestination(

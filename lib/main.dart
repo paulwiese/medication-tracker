@@ -16,9 +16,9 @@ void main() async {
   var box = await Hive.openBox('medication');
 
   var medication = [
-    Medication(id: 0, name: 'Vitamin A', active: true, cycle: 7, last: DateTime(2024,11, 14), next: DateTime(2024, 11, 21), stock: 20),
-    Medication(id: 1, name: 'Vitamin B', active: true, cycle: 7, last: DateTime(2024,11, 10), next: DateTime(2024, 11, 17), stock: 20),
-    Medication(id: 2, name: 'Vitamin C', active: true, cycle: 7, last: DateTime(2024, 11, 22), next: DateTime(2024, 11, 29), stock: 20),
+    Medication(id: 0, name: 'Vitamin A', active: true, cycle: 7, last: DateTime(2024,11, 14), next: DateTime(2024, 11, 21), stock: 20, started: DateTime(2024,11, 14), total: 0),
+    Medication(id: 1, name: 'Vitamin B', active: true, cycle: 7, last: DateTime(2024,11, 10), next: DateTime(2024, 11, 17), stock: 20, started: DateTime(2024,11, 10), total: 0),
+    Medication(id: 2, name: 'Vitamin C', active: true, cycle: 7, last: DateTime(2024, 11, 22), next: DateTime(2024, 11, 29), stock: 20, started: DateTime(2024,11, 22), total: 0),
   ];
 
   box.put(0, medication);
@@ -32,6 +32,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Navigation()
     );
   }

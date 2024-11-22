@@ -65,21 +65,32 @@ class _TodayList extends StatefulWidget {
 
 class _TodayListState extends State<_TodayList> {
   
-  final _medication = Hive.box('medication');
+  var box = Hive.box('medication');
+  late List<Medication> m;
+  late List<Medication> items;
+  late DateTime today;
+
+  @override
+  void initState() {
+    super.initState();
+    update();
+  }
+
+  void update() async {
+    setState(() {
+      today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      m = box.get(0);
+      items = [];
+      for (int i = 0; i < m.length; i++) {
+        if(m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day == today.day) {
+          items.add(m[i]);
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    var m = _medication.get(0);
-    var items = [];
-
-    var today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-
-    for (int i = 0; i < m.length; i++) {
-      if(m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day == today.day) {
-        items.add(m[i]);
-      }
-    }
 
     return items.isEmpty ?
     Container(
@@ -101,7 +112,7 @@ class _TodayListState extends State<_TodayList> {
              Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(id: index),
+                builder: (context) => DetailScreen(id: index, update: update,),
               ),
             );
           },
@@ -121,6 +132,7 @@ class _TodayListState extends State<_TodayList> {
                                 items[index].last = today;
                                 items[index].next = today.add(Duration(days: items[index].cycle));
                                 items[index].stock -= 1;
+                                items[index].total++;
                               });
                             },
                             style: ElevatedButton.styleFrom(
@@ -150,25 +162,36 @@ class _PastList extends StatefulWidget {
 
 class _PastListState extends State<_PastList> {
   
-  final _medication = Hive.box('medication');
+  var box = Hive.box('medication');
+  late List<Medication> m;
+  late List<Medication> items;
+  late DateTime today;
+
+  @override
+  void initState() {
+    super.initState();
+    update();
+  }
+
+  void update() async {
+    setState(() {
+      today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      m = box.get(0);
+      items = [];
+      for (int i = 0; i < m.length; i++) {
+        if(
+        m[i].next.year < today.year ||
+        (m[i].next.year == today.year && m[i].next.month < today.month) ||
+        (m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day < today.day)
+        ) {
+          items.add(m[i]);
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    var m = _medication.get(0);
-    List<Medication> items = [];
-
-    var today = DateTime.now();
-
-    for (int i = 0; i < m.length; i++) {
-      if(
-      m[i].next.year < today.year ||
-      (m[i].next.year == today.year && m[i].next.month < today.month) ||
-      (m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day < today.day)
-      ) {
-        items.add(m[i]);
-      }
-    }
 
     return items.isEmpty ?
     Container(
@@ -189,7 +212,7 @@ class _PastListState extends State<_PastList> {
              Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(id: items[index].id),
+                builder: (context) => DetailScreen(id: items[index].id, update: update,),
               ),
             );
           },
@@ -200,9 +223,11 @@ class _PastListState extends State<_PastList> {
               trailing:
                 SizedBox(width: 120, child:
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(margin: const EdgeInsets.all(5), child:
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SizedBox(width: 50, child: Text('next:'),),    
                             SizedBox(width: 50, child: Text('${items[index].next.difference(today).inDays.toString()}d', style: const TextStyle(color: Color.fromARGB(255, 205, 40, 40))),),    
@@ -217,6 +242,7 @@ class _PastListState extends State<_PastList> {
                                 items[index].last = today;
                                 items[index].next = today.add(Duration(days: items[index].cycle));
                                 items[index].stock -= 1;
+                                items[index].total++;
                               });
                             },
                             style: ElevatedButton.styleFrom(

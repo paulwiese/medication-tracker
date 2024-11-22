@@ -12,12 +12,19 @@ class All extends StatefulWidget {
 
 class _AllState extends State<All> {
   
-  final _medication = Hive.box('medication');
+  var box = Hive.box('medication');
+
+  void update() async {
+    var b = await Hive.openBox<Medication>('medication');
+    setState(() {
+      box = b;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    var m = _medication.get(0);
+    var m = box.get(0);
     List<Medication> items = [];
 
     var today = DateTime.now();
@@ -43,7 +50,7 @@ class _AllState extends State<All> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => DetailScreen(id: items[index].id),
+                          builder: (context) => DetailScreen(id: items[index].id, update: update,),
                         ),
                       );
                     },
@@ -54,9 +61,11 @@ class _AllState extends State<All> {
                         trailing:
                             SizedBox(width: 120, child:
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(margin: const EdgeInsets.all(5), child:
                                     Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const SizedBox(width: 50, child: Text('next:'),),    
                                         SizedBox(
@@ -88,6 +97,7 @@ class _AllState extends State<All> {
                                   ),
                                   Container(margin: const EdgeInsets.all(5), child:
                                     Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const SizedBox(width: 50, child: Text('stock:'),),    
                                         SizedBox(width: 50, child: Text(items[index].stock.toString()),)
