@@ -75,7 +75,7 @@ class DetailScreenState extends State<DetailScreen> {
                   m.stock = (_stockController.text.isEmpty || int.tryParse(_stockController.text) == null) ? 0 : int.parse(_stockController.text);
                   m.started = started;
                   m.total = total;
-                  box.put(index,medication);
+                  box.put(0,medication);
                   widget.update();
                 });
               },

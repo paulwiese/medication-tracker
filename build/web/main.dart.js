@@ -24024,7 +24024,6 @@ this.a=c},
 HG:function HG(a){var _=this
 _.as=_.Q=_.z=_.y=_.x=_.w=_.r=_.f=_.e=_.d=$
 _.ax=a
-_.ay=0
 _.c=_.a=null},
 Zy:function Zy(a){this.a=a},
 Zx:function Zx(a){this.a=a},
@@ -80796,7 +80795,6 @@ n.aI()
 s=n.d=A.ev(n.ax.dD(0,0),!0,t.aF)
 for(r=s.length,q=n.a,p=0;p<r;++p){o=s[p]
 if(o.d===q.c){n.e=o
-n.ay=p
 break}}s=n.e
 s===$&&A.a()
 r=s.e
@@ -80854,40 +80852,39 @@ $0(){var s=this.a
 s.a3(new A.Zx(s))},
 $S:0}
 A.Zx.prototype={
-$0(){var s,r,q,p=this.a,o=p.e
-o===$&&A.a()
-s=p.f
+$0(){var s,r,q=this.a,p=q.e
+p===$&&A.a()
+s=q.f
 s===$&&A.a()
-o.e=s.a.a
-s=p.r
+p.e=s.a.a
+s=q.r
 s===$&&A.a()
-o.f=s
-s=p.w
+p.f=s
+s=q.w
 s===$&&A.a()
-o.r=s
-s=p.x
+p.r=s
+s=q.x
 s===$&&A.a()
-o.w=s
-s=p.y
+p.w=s
+s=q.y
 s===$&&A.a()
-o.x=s
-s=p.z
+p.x=s
+s=q.z
 s===$&&A.a()
 s=s.a.a
-o.y=s.length===0||A.yQ(s,null)==null?0:A.i0(p.z.a.a,null)
-o=p.e
-r=p.Q
+p.y=s.length===0||A.yQ(s,null)==null?0:A.i0(q.z.a.a,null)
+p=q.e
+r=q.Q
 r===$&&A.a()
-o.z=r
-r=p.as
+p.z=r
+r=q.as
 r===$&&A.a()
-o.Q=r
-r=p.ax
-o=p.ay
-q=p.d
-q===$&&A.a()
-r.ky(A.aC([o,q],t.z,r.$ti.c))
-p.a.bz(0)},
+p.Q=r
+r=q.ax
+p=q.d
+p===$&&A.a()
+r.ky(A.aC([0,p],t.z,r.$ti.c))
+q.a.bz(0)},
 $S:0}
 A.Zz.prototype={
 $1(a){var s=this.a
