@@ -65,7 +65,7 @@ class _TodayList extends StatefulWidget {
 
 class _TodayListState extends State<_TodayList> {
   
-  var box = Hive.box('medication');
+  late var box;
   late List<Medication> m;
   late List<Medication> items;
   late DateTime today;
@@ -73,6 +73,7 @@ class _TodayListState extends State<_TodayList> {
   @override
   void initState() {
     super.initState();
+    box = Hive.box('medication');
     update();
   }
 
@@ -134,6 +135,7 @@ class _TodayListState extends State<_TodayList> {
                                 items[index].stock -= 1;
                                 items[index].total++;
                               });
+                              update();
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,
@@ -162,7 +164,7 @@ class _PastList extends StatefulWidget {
 
 class _PastListState extends State<_PastList> {
   
-  var box = Hive.box('medication');
+  late var box;
   late List<Medication> m;
   late List<Medication> items;
   late DateTime today;
@@ -170,6 +172,7 @@ class _PastListState extends State<_PastList> {
   @override
   void initState() {
     super.initState();
+    box = Hive.box('medication');
     update();
   }
 
@@ -244,6 +247,7 @@ class _PastListState extends State<_PastList> {
                                 items[index].stock -= 1;
                                 items[index].total++;
                               });
+                              update();
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,

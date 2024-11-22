@@ -16,6 +16,7 @@ class DetailScreen extends StatefulWidget{
 
 class DetailScreenState extends State<DetailScreen> {
 
+  late List<Medication> medication;
   late Medication m;
   late TextEditingController _nameController;
   late bool active;
@@ -31,11 +32,11 @@ class DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    List<Medication> a = Hive.box('medication').get(0);
+    medication = Hive.box('medication').get(0);
 
-    for(int i = 0; i < a.length; i++) {
-      if(a[i].id == widget.id) {
-        m = a[i];
+    for(int i = 0; i < medication.length; i++) {
+      if(medication[i].id == widget.id) {
+        m = medication[i];
       }
     }
 
@@ -214,7 +215,23 @@ class DetailScreenState extends State<DetailScreen> {
             ),
             SizedBox(height: space,),
             Text('Total number of intakes: $total'),
-
+            SizedBox(height: space,),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  medication.remove(m);
+                });
+                widget.update();
+                Navigator.pop(context);
+              },
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Delete'),
+                  Icon(Icons.delete_forever_rounded)
+                ],
+              )
+            )
           ],
         )
       ,),
