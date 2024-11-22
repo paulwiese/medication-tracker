@@ -22,19 +22,21 @@ class _AllState extends State<All> {
   void initState() {
     super.initState();
     box = Hive.box('medication');
+    items = [];
+    m = [];
     update();
   }
 
   void update() async {
     setState(() {
       today = DateTime(
-          DateTime.now().year, DateTime.now().month, DateTime.now().day);
-      m = box.get(0);
-      items = [];
-      for (int i = 0; i < m.length; i++) {
-        items.add(m[i]);
-      }
+      DateTime.now().year, DateTime.now().month, DateTime.now().day);
     });
+    m = List<Medication>.from(box.get(0));
+    items = [];
+    for (int i = 0; i < m.length; i++) {
+      items.add(m[i]);
+    }
   }
 
   @override
@@ -52,6 +54,8 @@ class _AllState extends State<All> {
               Expanded(
                   child: ElevatedButton(
                       onPressed: () {
+                        if (!edit) {
+                          
                         int maxID = -1;
                         for (int i = 0; i < m.length; i++) {
                           if (m[i].id > maxID) {
@@ -65,13 +69,14 @@ class _AllState extends State<All> {
                               name: 'Medication $maxID',
                               active: true,
                               cycle: 7,
-                              last: DateTime(0),
+                              last: DateTime.now(),
                               next: DateTime.now(),
                               stock: 10,
                               started: DateTime(DateTime.now().year,
                                   DateTime.now().month, DateTime.now().day),
                               total: 0));
                         });
+                        box.put(0,m);
                         update();
                         Navigator.push(
                           context,
@@ -82,6 +87,7 @@ class _AllState extends State<All> {
                             ),
                           ),
                         );
+                      }
                       },
                       child: const Text('add new'))),
               Expanded(

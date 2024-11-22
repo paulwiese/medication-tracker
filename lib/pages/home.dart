@@ -74,13 +74,15 @@ class _TodayListState extends State<_TodayList> {
   void initState() {
     super.initState();
     box = Hive.box('medication');
+    items = [];
+    m = [];
     update();
   }
 
   void update() async {
     setState(() {
       today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-      m = box.get(0);
+      m = List<Medication>.from(box.get(0));
       items = [];
       for (int i = 0; i < m.length; i++) {
         if(m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day == today.day) {
@@ -113,7 +115,7 @@ class _TodayListState extends State<_TodayList> {
              Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(id: index, update: update,),
+                builder: (context) => DetailScreen(id: items[index].id, update: update,),
               ),
             );
           },
@@ -169,18 +171,24 @@ class _PastListState extends State<_PastList> {
   late List<Medication> items;
   late DateTime today;
 
+  List<Medication> a = [];
+
   @override
   void initState() {
     super.initState();
     box = Hive.box('medication');
+    items = a;
+    m = a;
     update();
   }
 
   void update() async {
     setState(() {
       today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-      m = box.get(0);
-      items = [];
+      
+      var med = box.get(0);
+      m = List<Medication>.from(med);
+      items = a;
       for (int i = 0; i < m.length; i++) {
         if(
         m[i].next.year < today.year ||
@@ -192,6 +200,7 @@ class _PastListState extends State<_PastList> {
       }
     });
   }
+  
 
   @override
   Widget build(BuildContext context) {

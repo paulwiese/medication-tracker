@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'index.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -9,10 +11,23 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   
+  var box = Hive.box('medication');
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Settings'))
+    return Scaffold(
+      body: Center(child: 
+        TextButton(onPressed: () {
+          box.put(1,'not-ready');
+          Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Start(),
+                      ),
+                    );
+        },
+        child: const Text('Reset'))
+      )
     );
   }
 }

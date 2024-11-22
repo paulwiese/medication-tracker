@@ -32,7 +32,7 @@ class DetailScreenState extends State<DetailScreen> {
   @override
   void initState() {
     super.initState();
-    medication = Hive.box('medication').get(0);
+    medication = List<Medication>.from(Hive.box('medication').get(0));
 
     for(int i = 0; i < medication.length; i++) {
       if(medication[i].id == widget.id) {
