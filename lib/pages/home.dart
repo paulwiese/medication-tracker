@@ -175,24 +175,22 @@ class _PastListState extends State<_PastList> {
   late List<Medication> items;
   late DateTime today;
 
-  List<Medication> a = [];
-
   @override
   void initState() {
     super.initState();
     box = Hive.box('medication');
-    items = a;
-    m = a;
+    items = [];
+    m = [];
     update();
   }
 
-  void update() async {
+  void update() {
     setState(() {
       today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
       
       var med = box.get(0);
       m = List<Medication>.from(med);
-      items = a;
+      items = [];
       for (int i = 0; i < m.length; i++) {
         if(
         m[i].next.year < today.year ||
@@ -255,10 +253,11 @@ class _PastListState extends State<_PastList> {
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
-                                items[index].last = today;
-                                items[index].next = today.add(Duration(days: items[index].cycle));
-                                items[index].stock -= 1;
-                                items[index].total++;
+                                Medication x = items[index];
+                                x.last = today;
+                                x.next = today.add(Duration(days: items[index].cycle));
+                                x.stock -= 1;
+                                x.total++;
                               });
                               update();
                             },
