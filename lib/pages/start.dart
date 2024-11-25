@@ -69,24 +69,27 @@ class _StartState extends State<Start> {
               (box.get(1) == 'ready')
                   ? Row(
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.blue[100], 
-                            shape: BoxShape.rectangle,
-                            borderRadius: const BorderRadius.all(Radius.circular(12.0))
+                        Flexible(child:
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue[100], 
+                              shape: BoxShape.rectangle,
+                              borderRadius: const BorderRadius.all(Radius.circular(12.0))
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                box.put(3, false);
+                                box.put(4, true);
+                                Navigator.pushReplacement(context, MaterialPageRoute(
+                                  builder: (context) => const Navigation(),
+                                ),);
+                              }
+                              , child: const Text('Start fresh', style: TextStyle(color: Colors.black))
+                            )
                           ),
-                          child: TextButton(
-                            onPressed: () {
-                              box.put(3, false);
-                              box.put(4, true);
-                              Navigator.pushReplacement(context, MaterialPageRoute(
-                                builder: (context) => const Navigation(),
-                              ),);
-                            }
-                            , child: const Text('Start fresh', style: TextStyle(color: Colors.black))
-                          )
                         ),
                         const SizedBox(width: 20,),
+                        Flexible(child:
                         Container(
                           decoration: BoxDecoration(
                             color: Colors.blue[100], 
@@ -142,9 +145,9 @@ class _StartState extends State<Start> {
                                 builder: (context) => const Navigation(),
                               ),);
                             }
-                            , child: const Text('Test with sample data', style: TextStyle(color: Colors.black))
+                            , child: const Text('Test with sample data', style: TextStyle(color: Colors.black), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,)
                           )
-                        ),
+                        ),)
                       ],
                     )
                   : const SizedBox(

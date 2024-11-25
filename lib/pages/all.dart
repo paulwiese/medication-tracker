@@ -161,7 +161,7 @@ class _AllState extends State<All> {
                           icon: const Icon(Icons.delete_forever_rounded))
                         : null,
                       trailing: SizedBox(
-                          width: 120,
+                          width: 110,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -171,11 +171,11 @@ class _AllState extends State<All> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const SizedBox(
-                                        width: 50,
+                                        width: 45,
                                         child: Text('next:'),
                                       ),
                                       SizedBox(
-                                          width: 50,
+                                          width: 45,
                                           child: Builder(builder: (context) {
                                             var diff = items[index]
                                                 .next
@@ -206,11 +206,11 @@ class _AllState extends State<All> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const SizedBox(
-                                        width: 50,
+                                        width: 45,
                                         child: Text('stock:'),
                                       ),
                                       SizedBox(
-                                        width: 50,
+                                        width: 45,
                                         child:
                                             Text(items[index].stock.toString()),
                                       )

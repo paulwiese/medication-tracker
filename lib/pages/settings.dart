@@ -73,8 +73,8 @@ class _SettingsState extends State<Settings> {
               Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Daily Reminder Notification'),
-                const SizedBox(width: 20,),
+                const Text('Daily Reminder Notification', softWrap: true, maxLines: 2,),
+                const SizedBox(width: 10,),
                 Switch(
                   value: notifications,
                   onChanged: (value) {
@@ -86,12 +86,12 @@ class _SettingsState extends State<Settings> {
                 ),
               ],
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 10,),
               Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Display Help'),
-                const SizedBox(width: 20,),
+                const SizedBox(width: 10,),
                 Switch(
                   value: help,
                   onChanged: (value) {
@@ -101,7 +101,7 @@ class _SettingsState extends State<Settings> {
                     box.put(4, value);
                   },
                 ),
-                const SizedBox(width: 20,),
+                const SizedBox(width: 10,),
                 IconButton(
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",

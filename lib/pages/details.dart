@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -35,6 +37,8 @@ class DetailScreenState extends State<DetailScreen> {
   int h = 0;
 
   bool help = true;
+
+  double hspace = 12;
 
   @override
   void initState() {
@@ -105,7 +109,7 @@ class DetailScreenState extends State<DetailScreen> {
             Row(
               children: [
                 const Text('Active'),
-                const SizedBox(width: 20,),
+                SizedBox(width: hspace,),
                 Switch(
                   value: active,
                   onChanged: (value) {
@@ -128,11 +132,14 @@ class DetailScreenState extends State<DetailScreen> {
             SizedBox(height: space,),
             Row(
               children: [
-                Text('Intake Cycle:   $cycle days'),
-                const SizedBox(width: 20,),
+                Text('Intake Cycle:  $cycle days'),
+                SizedBox(width: hspace,),
                 Container(
-                  decoration:BoxDecoration(color: Colors.grey[300], borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  width: 28,
+                  height: 28,
+                  decoration:BoxDecoration(color: Colors.grey[300], borderRadius: const BorderRadius.all(Radius.circular(5))),
                   child: IconButton(
+                    padding: const EdgeInsets.all(0),
                     icon: const Icon(Icons.add),
                     onPressed: () {
                       setState(() {
@@ -141,10 +148,13 @@ class DetailScreenState extends State<DetailScreen> {
                     },
                   ),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(width: 7,),
                 Container(
-                  decoration:BoxDecoration(color: Colors.grey[300], borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  width: 28,
+                  height: 28,
+                  decoration:BoxDecoration(color: Colors.grey[300], borderRadius: const BorderRadius.all(Radius.circular(5))),
                   child: IconButton(
+                    padding: const EdgeInsets.all(0),
                     icon: const Icon(Icons.remove),
                     onPressed: () {
                       if (cycle > 1) {
@@ -155,7 +165,7 @@ class DetailScreenState extends State<DetailScreen> {
                     },
                   ),
                 ),
-                const SizedBox(width: 15,),
+                SizedBox(width: hspace,),
                 help ? IconButton(
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",
@@ -170,7 +180,7 @@ class DetailScreenState extends State<DetailScreen> {
             Row(
               children: [
                 Text('Last Intake:  ${'${last.toLocal()}'.split(' ')[0]}'),
-                const SizedBox(width: 20,),
+                SizedBox(width: hspace,),
                 IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () async {
@@ -187,7 +197,7 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
-                  const SizedBox(width: 15,),
+                  SizedBox(width: hspace,),
                   help ? IconButton(
                     icon: const Icon(Icons.help_outline),
                     tooltip: "Info",
@@ -202,7 +212,7 @@ class DetailScreenState extends State<DetailScreen> {
             Row(
               children: [
                 Text('Next Intake:  ${'${next.toLocal()}'.split(' ')[0]}'),
-                const SizedBox(width: 20,),
+                SizedBox(width: hspace,),
                 IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () async {
@@ -219,7 +229,7 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
-                  const SizedBox(width: 15,),
+                  SizedBox(width: hspace,),
                 help ? IconButton(
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",
@@ -242,7 +252,7 @@ class DetailScreenState extends State<DetailScreen> {
                   ],
                   decoration: const InputDecoration(labelText: 'Stock'),
                 )),
-                const SizedBox(width: 15,),
+                SizedBox(width: hspace,),
                 help ? IconButton(
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",
@@ -257,7 +267,7 @@ class DetailScreenState extends State<DetailScreen> {
             Row(
               children: [
                 Text('Started:  ${'${started.toLocal()}'.split(' ')[0]}'),
-                const SizedBox(width: 20,),
+                SizedBox(width: hspace,),
                 IconButton(
                     icon: const Icon(Icons.calendar_today),
                     onPressed: () async {
@@ -274,7 +284,7 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
-                  const SizedBox(width: 15,),
+                  SizedBox(width: hspace,),
                 help ? IconButton(
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",
@@ -289,7 +299,7 @@ class DetailScreenState extends State<DetailScreen> {
             Row(
               children: [
                 Text('Total number of Intakes: $total'),
-                const SizedBox(width: 15,),
+                SizedBox(width: hspace,),
                 help ? IconButton(
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",
@@ -305,6 +315,7 @@ class DetailScreenState extends State<DetailScreen> {
               onPressed: () {
                 setState(() {
                   medication.remove(m);
+                  box.put(0,medication);
                 });
                 widget.update();
                 Navigator.pop(context);

@@ -109,7 +109,7 @@ class _TodayListState extends State<_TodayList> {
       child: const SizedBox(
         width: double.infinity,
         height: 40,
-        child: Align(alignment: Alignment.center, child: Text('No further medication sceduled today :)'))
+        child: Align(alignment: Alignment.center, child: Text('No further medication sceduled for today 🙂'))
       )
     )
     : ListView.builder(
@@ -219,7 +219,7 @@ class _PastListState extends State<_PastList> {
       child: const SizedBox(
         width: double.infinity,
         height: 40,
-        child: Align(alignment: Alignment.center, child: Text('No missed medication :)'))
+        child: Align(alignment: Alignment.center, child: Text('No missed medication 🙂'))
       )
     )
     : ListView.builder(
@@ -242,21 +242,21 @@ class _PastListState extends State<_PastList> {
             child: ListTile(
               title: Text(items[index].name),
               trailing:
-                SizedBox(width: 120, child:
+                SizedBox(width: 92, child:
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(margin: const EdgeInsets.all(5), child:
+                      Container(margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3), child:
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(width: 50, child: Text('next:'),),    
-                            SizedBox(width: 50, child: Text('${items[index].next.difference(today).inDays.toString()}d', style: const TextStyle(color: Color.fromARGB(255, 205, 40, 40))),),    
+                            const SizedBox(width: 40, child: Text('next:'),),    
+                            SizedBox(width: 40, child: Text('${items[index].next.difference(today).inDays.toString()}d', style: const TextStyle(color: Color.fromARGB(255, 205, 40, 40))),),    
                           ],
                         )
                       ),
-                      Container(margin: const EdgeInsets.all(5), child:
-                        SizedBox(width: 50, child: 
+                      Container(margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 3), child:
+                        SizedBox(width: 40, child: 
                           ElevatedButton(
                             onPressed: () {
                               setState(() {
