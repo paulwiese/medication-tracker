@@ -42,8 +42,8 @@ class _AllState extends State<All> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Center(
+      body: SingleChildScrollView(
+          child: Center(
                 child: Container(
       margin: const EdgeInsets.all(22),
       child: Column(
@@ -89,16 +89,37 @@ class _AllState extends State<All> {
                         );
                       }
                       },
-                      child: const Text('add new'))),
+                      style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(Colors.blue[100]),
+                      shape: const WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))
+                        ),
+                      )  
+                      ),
+                      child: const Text('add new', style: TextStyle(color: Colors.black)),
+                    )),
+              const SizedBox(width: 5,),
               Expanded(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          edit = !edit;
-                        });
-                        update();
-                      },
-                      child: edit ? const Text('done') : const Text('edit list'))),
+                child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        edit = !edit;
+                      });
+                      update();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStatePropertyAll(edit ? Colors.green[100] : Colors.blue[100]),
+                      shape: const WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5))
+                        ),
+                      )  
+                    ),
+                    child: edit ? const Text('done', style: TextStyle(color: Colors.black)) : const Text('edit list', style: TextStyle(color: Colors.black))
+                )
+              ),
+                      
             ],
           ),
           const SizedBox(
@@ -125,6 +146,7 @@ class _AllState extends State<All> {
                 },
                 child: Card(
                   margin: const EdgeInsets.symmetric(vertical: 5),
+                  color: items[index].active ? Colors.white : Colors.grey[200],
                   child: ListTile(
                       title: Text(items[index].name),
                       leading: edit ? 

@@ -13,24 +13,27 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  var box = Hive.box('medication');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:
           SingleChildScrollView(
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                 Container(
                   margin: const EdgeInsets.all(12),
-                  child: Text('👋Hello, ${Hive.box('medication').get(2)}', style: const TextStyle(fontSize: 35.0),),
+                  child: Text('👋Hello, ${Hive.box('medication').get(2)}', style: const TextStyle(fontSize: 32.0),),
                 ),
                 Container(
                   margin: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 240, 232, 230), // Background color of the box
-                    borderRadius: BorderRadius.circular(14), // Rounded corners
-                    border: Border.all(color: const Color.fromARGB(255, 167, 167, 167), width: 1), // Border
+                    color: const Color.fromARGB(255, 240, 240, 250),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: const Color.fromARGB(255, 167, 167, 167), width: 1),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +41,7 @@ class _HomeState extends State<Home> {
                       Container(
                         margin: const EdgeInsets.only(left: 15, top: 10),
                         child: const Text('Missed',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                       ConstrainedBox(constraints: const BoxConstraints(maxHeight: 200), child: const _PastList(),)
@@ -46,9 +49,9 @@ class _HomeState extends State<Home> {
                   )
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                  margin: const EdgeInsets.only(left: 15, top: 5),
                   child: const Text('Today',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const _TodayList()
@@ -81,6 +84,7 @@ class _TodayListState extends State<_TodayList> {
     items = [];
     m = [];
     update();
+
   }
 
   void update() async {
@@ -89,7 +93,7 @@ class _TodayListState extends State<_TodayList> {
       m = List<Medication>.from(box.get(0));
       items = [];
       for (int i = 0; i < m.length; i++) {
-        if(m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day == today.day) {
+        if(m[i].active && m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day == today.day) {
           items.add(m[i]);
         }
       }
@@ -101,7 +105,7 @@ class _TodayListState extends State<_TodayList> {
 
     return items.isEmpty ?
     Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       child: const SizedBox(
         width: double.infinity,
         height: 40,
@@ -124,6 +128,7 @@ class _TodayListState extends State<_TodayList> {
             );
           },
           child: Card(
+            color: Colors.white,
             margin: const EdgeInsets.symmetric(vertical: 5),
             child: ListTile(
               title: Text(items[index].name),
@@ -193,6 +198,7 @@ class _PastListState extends State<_PastList> {
       items = [];
       for (int i = 0; i < m.length; i++) {
         if(
+        m[i].active &&
         m[i].next.year < today.year ||
         (m[i].next.year == today.year && m[i].next.month < today.month) ||
         (m[i].next.year == today.year && m[i].next.month == today.month && m[i].next.day < today.day)
@@ -209,7 +215,7 @@ class _PastListState extends State<_PastList> {
 
     return items.isEmpty ?
     Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       child: const SizedBox(
         width: double.infinity,
         height: 40,
@@ -231,6 +237,7 @@ class _PastListState extends State<_PastList> {
             );
           },
           child: Card(
+            color: Colors.white,
             margin: const EdgeInsets.symmetric(vertical: 5),
             child: ListTile(
               title: Text(items[index].name),

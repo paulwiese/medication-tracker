@@ -32,6 +32,10 @@ class DetailScreenState extends State<DetailScreen> {
   var box = Hive.box('medication');
   int index = 0;
 
+  int h = 0;
+
+  bool help = true;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +58,9 @@ class DetailScreenState extends State<DetailScreen> {
     _stockController = TextEditingController(text: m.stock.toString());
     started = m.started;
     total = m.total;
+
+    help = box.get(4);
+
   }
 
   @override
@@ -61,7 +68,7 @@ class DetailScreenState extends State<DetailScreen> {
   
     return Scaffold(
       appBar: AppBar(title: Text(m.name),),
-      body: Padding(padding: const EdgeInsets.all(40), child: 
+      body: Padding(padding: const EdgeInsets.all(30), child: 
         ListView(
           children: [
             ElevatedButton(
@@ -96,7 +103,6 @@ class DetailScreenState extends State<DetailScreen> {
             ),
             SizedBox(height: space,),
             Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Active'),
                 const SizedBox(width: 20,),
@@ -108,6 +114,15 @@ class DetailScreenState extends State<DetailScreen> {
                     });
                   },
                 ),
+                const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 0;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
               ],
             ),
             SizedBox(height: space,),
@@ -139,13 +154,22 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
-                )
+                ),
+                const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 1;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
               ],
             ),
             SizedBox(height: space,),
             Row(
               children: [
-                Text('Last taken:  ${'${last.toLocal()}'.split(' ')[0]}'),
+                Text('Last Intake:  ${'${last.toLocal()}'.split(' ')[0]}'),
                 const SizedBox(width: 20,),
                 IconButton(
                     icon: const Icon(Icons.calendar_today),
@@ -163,12 +187,21 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
+                  const SizedBox(width: 15,),
+                  help ? IconButton(
+                    icon: const Icon(Icons.help_outline),
+                    tooltip: "Info",
+                    onPressed: () {
+                      h = 2;
+                      _showDescriptionDialog(context);
+                    },
+                  ) : const SizedBox(width: 0,),
               ],
             ),
             SizedBox(height: space,),
             Row(
               children: [
-                Text('Next intake:  ${'${next.toLocal()}'.split(' ')[0]}'),
+                Text('Next Intake:  ${'${next.toLocal()}'.split(' ')[0]}'),
                 const SizedBox(width: 20,),
                 IconButton(
                     icon: const Icon(Icons.calendar_today),
@@ -186,16 +219,39 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
+                  const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 3;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
               ],
             ),
             SizedBox(height: space,),
-            TextFormField(
-              controller: _stockController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
+            Row(
+              children: [
+                Expanded(child:
+                TextFormField(
+                  controller: _stockController,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  decoration: const InputDecoration(labelText: 'Stock'),
+                )),
+                const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 4;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
               ],
-              decoration: const InputDecoration(labelText: 'Stock'),
             ),
             SizedBox(height: space,),
             Row(
@@ -218,11 +274,33 @@ class DetailScreenState extends State<DetailScreen> {
                       }
                     },
                   ),
+                  const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 5;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
               ],
             ),
             SizedBox(height: space,),
-            Text('Total number of intakes: $total'),
-            SizedBox(height: space,),
+            Row(
+              children: [
+                Text('Total number of Intakes: $total'),
+                const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 6;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
+              ],
+            ),
+            const SizedBox(height: 60,),
             ElevatedButton(
               onPressed: () {
                 setState(() {
@@ -231,6 +309,7 @@ class DetailScreenState extends State<DetailScreen> {
                 widget.update();
                 Navigator.pop(context);
               },
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[200]),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -238,10 +317,75 @@ class DetailScreenState extends State<DetailScreen> {
                   Icon(Icons.delete_forever_rounded)
                 ],
               )
-            )
+            ),
+            const SizedBox(height: 50,),
           ],
         )
       ,),
     );
   }
+
+  void _showDescriptionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        List<String> title = [
+          'Active/Passive Switch',
+          'Intake Cycle',
+          'Last Intake', 
+          'Next Intake',
+          'Stock',
+          'Start',
+          'Total number of Intakes'
+        ];
+
+
+
+        List<String> info = [
+          'Active medication-plans are displayed on the home screen when the date for the next sceduled intake is reached or exceeded.',
+          'After tracking the intake of a medication via the Home-Screen the next intake is automatically sceduled according to the specified input cycle.',
+          'The date of the last intake of a medication is automatically saved when the user tracks it via the Home-Screen.',
+          'The date of the next intake is automatically sceduled according to the specified input cycle, when the user tracks taking the medication via the Home-Screen.',
+          'The available stock is automatically decremented when the user tracks taking the medication via the Home-Screen.', 
+          'This field reflects the date when the user started using the medication.',
+          'The total number of intakes is automatically incremented, when the user tracks taking the medication via the Home-Screen'
+        ];
+
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title[h],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  info[h],
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

@@ -12,22 +12,173 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   
   var box = Hive.box('medication');
+  final TextEditingController _name = TextEditingController(text: '');
+
+  bool rdo = true;
+  bool notifications = false;
+  bool help = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _name.text = box.get(2);
+    notifications = box.get(3);
+    help = box.get(4);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(child: 
-        TextButton(onPressed: () {
-          box.put(1,'not-ready');
-          Navigator.pushReplacement(
-                      context,
+        Container(
+          margin: const EdgeInsets.all(30),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child:TextFormField(
+                    controller: _name,
+                    readOnly: rdo,
+                    decoration: const InputDecoration(labelText: 'Name'),
+                    ),
+                  ),
+                  Container(
+                    width: 120,
+                    decoration: BoxDecoration(
+                      color: rdo ?Colors.blue[100] : Colors.green[100], 
+                      shape: BoxShape.rectangle,
+                      borderRadius: const BorderRadius.all(Radius.circular(12.0))
+                    ),
+                    child: TextButton(onPressed: () {
+                        String input = _name.text;
+                        if(rdo) {
+                          setState(() {
+                            rdo = !rdo;
+                          });
+                        }
+                        else if(input.isNotEmpty) {
+                          box.put(2,input);
+                          setState(() {
+                            rdo = !rdo;
+                          });
+                        }
+                      }, 
+                      child: rdo ? const Text('Edit Name', style: TextStyle(color: Colors.black)) : const Text('Save', style: TextStyle(color: Colors.black))
+                    )
+                  )
+                ],
+              ),
+              const SizedBox(height: 20,),
+              Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Daily Reminder Notification'),
+                const SizedBox(width: 20,),
+                Switch(
+                  value: notifications,
+                  onChanged: (value) {
+                    setState(() {
+                      notifications = value;
+                    });
+                    box.put(3, value);
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 20,),
+              Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Display Help'),
+                const SizedBox(width: 20,),
+                Switch(
+                  value: help,
+                  onChanged: (value) {
+                    setState(() {
+                      help = value;
+                    });
+                    box.put(4, value);
+                  },
+                ),
+                const SizedBox(width: 20,),
+                IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    _showDescriptionDialog(context);
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 60,),
+            Container(
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.red[200], 
+                shape: BoxShape.rectangle,
+                borderRadius: const BorderRadius.all(Radius.circular(12.0))
+              ),
+              child: TextButton(
+                onPressed: () {
+                  box.put(1,'not-ready');
+                  Navigator.pushReplacement(
+                    context,
                       MaterialPageRoute(
                         builder: (context) => const Start(),
                       ),
                     );
-        },
-        child: const Text('Reset'))
-      )
+                },
+                child: const Text('Reset', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)
+              ),
+            )
+          ],
+        ),
+      ),
+        
+      ),
     );
   }
+
+  void _showDescriptionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Help',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'Help-Buttons (like this one) will appear throughout the App to provide Explanations.',
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

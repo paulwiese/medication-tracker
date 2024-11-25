@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'index.dart';
 
 class Navigation extends StatefulWidget {
@@ -10,6 +11,13 @@ class Navigation extends StatefulWidget {
 class NavigationState extends State<Navigation> {
   int currentPageIndex = 0;
 
+  var box = Hive.box('medication');
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     //final ThemeData theme = Theme.of(context);
@@ -20,7 +28,7 @@ class NavigationState extends State<Navigation> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.amber,
+        indicatorColor: Colors.blue[100],
         selectedIndex: currentPageIndex,
         destinations: const <Widget>[
           NavigationDestination(
