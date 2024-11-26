@@ -15,6 +15,15 @@ class _HomeState extends State<Home> {
 
   var box = Hive.box('medication');
 
+  bool help = true;
+  int h = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    help = box.get(4);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,22 +47,52 @@ class _HomeState extends State<Home> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 15, top: 10),
-                        child: const Text('Missed',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(left: 15, top: 10),
+                            child: const Text('Missed',
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(width: 5,),
+                          help ? Padding(padding: const EdgeInsets.symmetric(vertical: 3), child:IconButton(
+                            icon: const Icon(Icons.help_outline),
+                            tooltip: "Info",
+                            onPressed: () {
+                              h = 0;
+                              _showDescriptionDialog(context);
+                            },
+                          )) : const SizedBox(width: 0,),
+                        ],
                       ),
+                      
                       ConstrainedBox(constraints: const BoxConstraints(maxHeight: 200), child: const _PastList(),)
                     ],
                   )
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15, top: 5),
-                  child: const Text('Today',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 15, top: 5),
+                      child: const Text('Today',
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(width: 5,),
+                      help ? Padding(padding: const EdgeInsets.symmetric(vertical: 3), child: IconButton(
+                        icon: const Icon(Icons.help_outline),
+                        tooltip: "Info",
+                        onPressed: () {
+                          h = 1;
+                          _showDescriptionDialog(context);
+                        },
+                      )) : const SizedBox(width: 0,),
+                  ],
                 ),
+                
                 const _TodayList()
             ],
           ) 
@@ -61,6 +100,60 @@ class _HomeState extends State<Home> {
       
     );
   }
+
+  void _showDescriptionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        List<String> title = [
+          'Past List',
+          'Today List',
+        ];
+
+
+
+        List<String> info = [
+          'All medications that were sceduled for past days with no tracked intake are listed here. Use the check button to track intake and trigger automatic resceduling.',
+          'All medications that are sceduled for intake today are listed here. Use the check button to track intake and trigger automatic resceduling.',
+        ];
+
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title[h],
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  info[h],
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: const Text("Close"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }
 
 class _TodayList extends StatefulWidget {
@@ -187,6 +280,7 @@ class _PastListState extends State<_PastList> {
     items = [];
     m = [];
     update();
+
   }
 
   void update() {
