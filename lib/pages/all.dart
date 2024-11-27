@@ -161,7 +161,7 @@ class _AllState extends State<All> {
                           icon: const Icon(Icons.delete_forever_rounded))
                         : null,
                       trailing: SizedBox(
-                          width: 110,
+                          width: 90,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -171,11 +171,11 @@ class _AllState extends State<All> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const SizedBox(
-                                        width: 45,
+                                        width: 40,
                                         child: Text('next:'),
                                       ),
                                       SizedBox(
-                                          width: 45,
+                                          width: 40,
                                           child: Builder(builder: (context) {
                                             var diff = items[index]
                                                 .next
@@ -201,16 +201,16 @@ class _AllState extends State<All> {
                                     ],
                                   )),
                               Container(
-                                  margin: const EdgeInsets.all(5),
+                                  margin: const EdgeInsets.symmetric(vertical: 5),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const SizedBox(
-                                        width: 45,
+                                        width: 40,
                                         child: Text('stock:'),
                                       ),
                                       SizedBox(
-                                        width: 45,
+                                        width: 40,
                                         child:
                                             Text(items[index].stock.toString()),
                                       )
