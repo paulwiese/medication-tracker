@@ -40,6 +40,8 @@ class DetailScreenState extends State<DetailScreen> {
 
   double hspace = 12;
 
+  bool emp = false;
+
   @override
   void initState() {
     super.initState();
@@ -77,18 +79,27 @@ class DetailScreenState extends State<DetailScreen> {
           children: [
             ElevatedButton(
               onPressed: () {
-                setState(() {
-                  m.name = _nameController.text;
-                  m.active = active;
-                  m.cycle = cycle;
-                  m.last = last;
-                  m.next = next;
-                  m.stock = (_stockController.text.isEmpty || int.tryParse(_stockController.text) == null) ? 0 : int.parse(_stockController.text);
-                  m.started = started;
-                  m.total = total;
-                  box.put(0,medication);
-                  widget.update();
-                });
+                if(_nameController.text.isEmpty) {
+                  setState(() {
+                    emp = true;
+                  });
+                }
+                else {
+                  setState(() {
+                    m.name = _nameController.text;
+                    m.active = active;
+                    m.cycle = cycle;
+                    m.last = last;
+                    m.next = next;
+                    m.stock = (_stockController.text.isEmpty || int.tryParse(_stockController.text) == null) ? 0 : int.parse(_stockController.text);
+                    m.started = started;
+                    m.total = total;
+                    box.put(0,medication);
+                    widget.update();
+                    
+                    emp = false;
+                  });
+                }
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[200]),
               child: const Row(
@@ -105,6 +116,10 @@ class DetailScreenState extends State<DetailScreen> {
               controller: _nameController,
               decoration: const InputDecoration(labelText: 'Name'),
             ),
+            emp ? const Text(
+                'Please enter a valid medication name and save.',
+                style: TextStyle(fontSize: 12.0, color: Colors.red),
+              ) : const SizedBox(height:0),
             SizedBox(height: space,),
             Row(
               children: [

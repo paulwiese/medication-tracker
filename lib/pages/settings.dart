@@ -18,6 +18,8 @@ class _SettingsState extends State<Settings> {
   bool notifications = false;
   bool help = true;
 
+  bool emp = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +35,7 @@ class _SettingsState extends State<Settings> {
         Container(
           margin: const EdgeInsets.all(30),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -55,12 +58,19 @@ class _SettingsState extends State<Settings> {
                         if(rdo) {
                           setState(() {
                             rdo = !rdo;
+                            emp = false;
                           });
                         }
                         else if(input.isNotEmpty) {
                           box.put(2,input);
                           setState(() {
                             rdo = !rdo;
+                            emp = false;
+                          });
+                        }
+                        else {
+                          setState(() {
+                            emp = true;
                           });
                         }
                       }, 
@@ -69,6 +79,10 @@ class _SettingsState extends State<Settings> {
                   )
                 ],
               ),
+              emp ? const Text(
+                'Please enter a valid name and save.',
+                style: TextStyle(fontSize: 12.0, color: Colors.red),
+              ) : const SizedBox(height:0),
               const SizedBox(height: 20,),
               Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,13 +135,7 @@ class _SettingsState extends State<Settings> {
               ),
               child: TextButton(
                 onPressed: () {
-                  box.put(1,'not-ready');
-                  Navigator.pushReplacement(
-                    context,
-                      MaterialPageRoute(
-                        builder: (context) => const Start(),
-                      ),
-                    );
+                  _showResetConfirmationDialog();
                 },
                 child: const Text('Reset', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)
               ),
@@ -138,6 +146,39 @@ class _SettingsState extends State<Settings> {
         
       ),
     );
+  }
+
+  void _showResetConfirmationDialog() {
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Confirm Reset'),
+        content: const Text('Are you sure you want to reset? This action is not reversible.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              box.put(1, 'not-ready');
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Start(),
+                ),
+              );
+            },
+            child: const Text('Reset'),
+          ),
+        ],
+      );
+    },
+  );
   }
 
   void _showDescriptionDialog(BuildContext context) {
