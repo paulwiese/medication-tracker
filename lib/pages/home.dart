@@ -233,11 +233,18 @@ class _TodayListState extends State<_TodayList> {
                         SizedBox(width: 50, child: 
                           ElevatedButton(
                             onPressed: () {
+                              Medication med = items[index];
                               setState(() {
-                                items[index].last = today;
-                                items[index].next = today.add(Duration(days: items[index].cycle));
-                                items[index].stock -= 1;
-                                items[index].total++;
+                                m.remove(med);
+                                
+                                med.last = today;
+                                med.next = today.add(Duration(days: items[index].cycle));
+                                med.stock -= 1;
+                                med.total++;
+
+                                m.add(med);
+
+                                box.put(0,m);
                               });
                               update();
                             },
@@ -353,14 +360,22 @@ class _PastListState extends State<_PastList> {
                         SizedBox(width: 40, child: 
                           ElevatedButton(
                             onPressed: () {
+                              
+                              Medication med = items[index];
                               setState(() {
-                                Medication x = items[index];
-                                x.last = today;
-                                x.next = today.add(Duration(days: items[index].cycle));
-                                x.stock -= 1;
-                                x.total++;
+                                m.remove(med);
+                                
+                                med.last = today;
+                                med.next = today.add(Duration(days: items[index].cycle));
+                                med.stock -= 1;
+                                med.total++;
+
+                                m.add(med);
+
+                                box.put(0,m);
                               });
                               update();
+
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,
