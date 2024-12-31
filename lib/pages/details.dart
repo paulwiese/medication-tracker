@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -10,7 +11,9 @@ class DetailScreen extends StatefulWidget{
   final int id;
   final Function update;
 
-  const DetailScreen({super.key, required this.id, required this.update});
+  final bool preview;
+
+  const DetailScreen({super.key, required this.id, required this.update, required this.preview});
   @override
   State<DetailScreen> createState() => DetailScreenState();
 
@@ -28,6 +31,11 @@ class DetailScreenState extends State<DetailScreen> {
   late TextEditingController _stockController;
   late DateTime started;
   late int total;
+  late bool prescription;
+  late TextEditingController _categoryController;
+  late TextEditingController _infoController;
+
+  late List<Medication> all;
 
   double space = 25;
 
@@ -48,12 +56,29 @@ class DetailScreenState extends State<DetailScreen> {
 
     medication = List<Medication>.from(box.get(0));
 
-    for(int i = 0; i < medication.length; i++) {
-      if(medication[i].id == widget.id) {
-        m = medication[i];
-        index = i;
-        break;
+    all = List<Medication>.from(box.get(5));
+
+    if(widget.preview) {
+
+      for(int i = 0; i < all.length; i++) {
+        if(all[i].id == widget.id) {
+          m = all[i];
+          index = i;
+          break;
+        }
       }
+
+    }
+    else {
+      
+      for(int i = 0; i < medication.length; i++) {
+        if(medication[i].id == widget.id) {
+          m = medication[i];
+          index = i;
+          break;
+        }
+      }
+
     }
 
     _nameController = TextEditingController(text: m.name);
@@ -64,6 +89,9 @@ class DetailScreenState extends State<DetailScreen> {
     _stockController = TextEditingController(text: m.stock.toString());
     started = m.started;
     total = m.total;
+    _categoryController = TextEditingController(text: m.category);
+    prescription = m.prescription;
+    _infoController = TextEditingController(text: m.info);
 
     help = box.get(4);
 
@@ -77,9 +105,9 @@ class DetailScreenState extends State<DetailScreen> {
       body: Padding(padding: const EdgeInsets.all(30), child: 
         ListView(
           children: [
-            ElevatedButton(
+            widget.preview ? const SizedBox(height: 0,) : ElevatedButton(
               onPressed: () {
-                if(_nameController.text.isEmpty) {
+                if(_nameController.text.isEmpty || _stockController.text.isEmpty || _categoryController.text.isEmpty || _infoController.text.isEmpty) {
                   setState(() {
                     emp = true;
                   });
@@ -94,12 +122,16 @@ class DetailScreenState extends State<DetailScreen> {
                     m.stock = (_stockController.text.isEmpty || int.tryParse(_stockController.text) == null) ? 0 : int.parse(_stockController.text);
                     m.started = started;
                     m.total = total;
+                    m.category = _categoryController.text;
+                    m.prescription = prescription;
+                    m.info = _infoController.text;
+
                     box.put(0,medication);
-                    widget.update();
                     
                     emp = false;
                   });
                 }
+                widget.update();
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[200]),
               child: const Row(
@@ -325,8 +357,68 @@ class DetailScreenState extends State<DetailScreen> {
                 ) : const SizedBox(width: 0,),
               ],
             ),
+            SizedBox(height: space,),
+            Row(
+              children: [
+                const Text('Prescription'),
+                SizedBox(width: hspace,),
+                Switch(
+                  value: prescription,
+                  onChanged: (value) {
+                    setState(() {
+                      prescription = value;
+                    });
+                  },
+                ),
+                const SizedBox(width: 15,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 7;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
+              ],
+            ),
+            SizedBox(height: space,),
+            Row(
+              children: [
+                Expanded(child:
+                  TextFormField(
+                    controller: _categoryController,
+                    decoration: const InputDecoration(labelText: 'Category'),
+                  )
+                ),
+                SizedBox(width: hspace,),
+                help ? IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h = 8;
+                    _showDescriptionDialog(context);
+                  },
+                ) : const SizedBox(width: 0,),
+              ],
+            ),          
+            emp ? const Text(
+                'Please enter a valid medication category and save.',
+                style: TextStyle(fontSize: 12.0, color: Colors.red),
+              ) : const SizedBox(height:0),
+            SizedBox(height: space,),
+            
+            TextFormField(
+              controller: _infoController,
+              decoration: const InputDecoration(labelText: 'Info'),
+              maxLines: 6
+            ),
+            emp ? const Text(
+                'Please enter a valid medication info text and save.',
+                style: TextStyle(fontSize: 12.0, color: Colors.red),
+              ) : const SizedBox(height:0),
+
             const SizedBox(height: 60,),
-            ElevatedButton(
+            widget.preview ? const SizedBox(height: 0,) : ElevatedButton(
               onPressed: () {
                 setState(() {
                   medication.remove(m);
@@ -344,7 +436,8 @@ class DetailScreenState extends State<DetailScreen> {
                 ],
               )
             ),
-            const SizedBox(height: 50,),
+            SizedBox(height: space,),
+            
           ],
         )
       ,),
@@ -362,7 +455,9 @@ class DetailScreenState extends State<DetailScreen> {
           'Next Intake',
           'Stock',
           'Start',
-          'Total number of Intakes'
+          'Total number of Intakes',
+          'Prescription',
+          'Category'
         ];
 
 
@@ -374,7 +469,9 @@ class DetailScreenState extends State<DetailScreen> {
           'The date of the next intake is automatically sceduled according to the specified input cycle, when the user tracks taking the medication via the Home-Screen.',
           'The available stock is automatically decremented when the user tracks taking the medication via the Home-Screen.', 
           'This field reflects the date when the user started using the medication.',
-          'The total number of intakes is automatically incremented, when the user tracks taking the medication via the Home-Screen'
+          'The total number of intakes is automatically incremented, when the user tracks taking the medication via the Home-Screen',
+          'Indicates whether a prescription is needed for this medication.',
+          'Indicates the category of the medication.'
         ];
 
         return Dialog(

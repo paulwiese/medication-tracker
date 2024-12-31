@@ -11,7 +11,8 @@ class All extends StatefulWidget {
 }
 
 class _AllState extends State<All> {
-  late var box;
+  
+  late Box box;
   late List<Medication> m;
   late List<Medication> items;
   late DateTime today;
@@ -33,10 +34,10 @@ class _AllState extends State<All> {
       DateTime.now().year, DateTime.now().month, DateTime.now().day);
     });
     m = List<Medication>.from(box.get(0));
-    items = [];
-    for (int i = 0; i < m.length; i++) {
-      items.add(m[i]);
-    }
+    items = m;
+    //for (int i = 0; i < m.length; i++) {
+      //items.add(m[i]);
+    //}
   }
 
   @override
@@ -56,12 +57,8 @@ class _AllState extends State<All> {
                       onPressed: () {
                         if (!edit) {
                           
-                        int maxID = -1;
-                        for (int i = 0; i < m.length; i++) {
-                          if (m[i].id > maxID) {
-                            maxID = m[i].id;
-                          }
-                        }
+                        int maxID = box.get(7);
+                        
                         maxID++;
                         setState(() {
                           m.add(Medication(
@@ -74,8 +71,14 @@ class _AllState extends State<All> {
                               stock: 10,
                               started: DateTime(DateTime.now().year,
                                   DateTime.now().month, DateTime.now().day),
-                              total: 0));
+                              total: 0,
+                              category: 'any',
+                              prescription: false,
+                              info: '--- Medication Info ---'
+                              ));
+                          
                         });
+                        box.put(7,maxID);
                         box.put(0,m);
                         update();
                         Navigator.push(
@@ -84,6 +87,7 @@ class _AllState extends State<All> {
                             builder: (context) => DetailScreen(
                               id: maxID,
                               update: update,
+                              preview: false,
                             ),
                           ),
                         );
@@ -139,6 +143,7 @@ class _AllState extends State<All> {
                         builder: (context) => DetailScreen(
                           id: items[index].id,
                           update: update,
+                          preview: false,
                         ),
                       ),
                     );

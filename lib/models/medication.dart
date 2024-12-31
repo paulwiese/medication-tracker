@@ -32,6 +32,15 @@ class Medication extends HiveObject {
   @HiveField(8)
   int total;
 
+  @HiveField(9)
+  String category;
+
+  @HiveField(10)
+  bool prescription;
+
+  @HiveField(11)
+  String info;
+
   Medication({
     required this.id,
     required this.name,
@@ -42,6 +51,26 @@ class Medication extends HiveObject {
     required this.stock,
     required this.started,
     required this.total,
+    required this.category,
+    required this.prescription,
+    required this.info
   });
+
+  Medication clone() {
+    return Medication(
+      id: id,
+      name: name,
+      active: active,
+      cycle: cycle,
+      last: last,
+      next: next,
+      stock: stock,
+      started: started,
+      total: total,
+      category: category,
+      prescription: prescription,
+      info: info,
+    );
+  }
 
 }

@@ -14,9 +14,13 @@ class _SettingsState extends State<Settings> {
   var box = Hive.box('medication');
   final TextEditingController _name = TextEditingController(text: '');
 
+  late int h;
+
   bool rdo = true;
   bool notifications = false;
   bool help = true;
+
+  bool vb = false;
 
   bool emp = false;
 
@@ -26,6 +30,8 @@ class _SettingsState extends State<Settings> {
     _name.text = box.get(2);
     notifications = box.get(3);
     help = box.get(4);
+    vb = box.get(6);
+    h = 0;
   }
 
   @override
@@ -93,6 +99,7 @@ class _SettingsState extends State<Settings> {
                   value: notifications,
                   onChanged: (value) {
                     setState(() {
+
                       notifications = value;
                     });
                     box.put(3, value);
@@ -101,7 +108,7 @@ class _SettingsState extends State<Settings> {
               ],
             ),
             const SizedBox(height: 10,),
-              Row(
+            Row(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Display Help'),
@@ -120,6 +127,33 @@ class _SettingsState extends State<Settings> {
                   icon: const Icon(Icons.help_outline),
                   tooltip: "Info",
                   onPressed: () {
+                    h=0;
+                    _showDescriptionDialog(context);
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 10,),
+            Row(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Browse-Page A/B'),
+                const SizedBox(width: 10,),
+                Switch(
+                  value: vb,
+                  onChanged: (value) {
+                    setState(() {
+                      vb = value;
+                    });
+                    box.put(6, value);
+                  },
+                ),
+                const SizedBox(width: 10,),
+                IconButton(
+                  icon: const Icon(Icons.help_outline),
+                  tooltip: "Info",
+                  onPressed: () {
+                    h=1;
                     _showDescriptionDialog(context);
                   },
                 ),
@@ -181,10 +215,25 @@ class _SettingsState extends State<Settings> {
   );
   }
 
+
   void _showDescriptionDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        List<String> title = [
+          'Help',
+          'Browse Page Version'
+        ];
+
+
+
+        List<String> info = [
+          'Help-Buttons (like this one) will appear throughout the App to provide Explanations.',
+          'Choose which version of the Browse-Page to use.\n\nVersion-A: Alphabetical list + Filters\n\nVersion-B: Swipe through medications of selected category horizontally.'
+          //Version-A: alphabetically ordered list; search-bar; filters
+          //Version-B: choose category and swipe through medications horizontally
+        ];
+
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -194,16 +243,16 @@ class _SettingsState extends State<Settings> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Help',
-                  style: TextStyle(
+                Text(
+                  title[h],
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  'Help-Buttons (like this one) will appear throughout the App to provide Explanations.',
+                Text(
+                  info[h],
                   textAlign: TextAlign.left,
                   style: const TextStyle(fontSize: 14),
                 ),

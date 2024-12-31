@@ -26,6 +26,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body:
           SingleChildScrollView(
@@ -34,8 +35,8 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                 Container(
-                  margin: const EdgeInsets.all(12),
-                  child: Text('👋Hello, ${Hive.box('medication').get(2)}', style: const TextStyle(fontSize: 32.0),),
+                  margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                  child: Text('👋 Hello, ${Hive.box('medication').get(2)}', style: const TextStyle(fontSize: 32.0),),
                 ),
                 Container(
                   margin: const EdgeInsets.all(12),
@@ -216,7 +217,7 @@ class _TodayListState extends State<_TodayList> {
              Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(id: items[index].id, update: update,),
+                builder: (context) => DetailScreen(id: items[index].id, update: update, preview: false,),
               ),
             );
           },
@@ -333,7 +334,7 @@ class _PastListState extends State<_PastList> {
              Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(id: items[index].id, update: update,),
+                builder: (context) => DetailScreen(id: items[index].id, update: update, preview: false,),
               ),
             );
           },
