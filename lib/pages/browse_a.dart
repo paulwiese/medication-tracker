@@ -233,8 +233,7 @@ class _BrowseAState extends State<BrowseA> {
                                             width: 50,
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                Medication med =
-                                                    filtered[index];
+                                                Medication med = filtered[index].clone();
 
                                                 int maxID = box.get(7);
                                                 maxID++;
