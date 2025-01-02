@@ -115,6 +115,10 @@ class _StartState extends State<Start> {
 
     ];
     
+    List<bool> running = [false, false, false, false, false];
+    List<bool> completed = [false, false, false, false, false];
+    List<double> result = [0,0,0,0,0];
+
     return Scaffold(
         body: Center(
       child: Container(
@@ -133,6 +137,7 @@ class _StartState extends State<Start> {
                         labelText: 'Hi there, what\'s your name?'),
                   )),
                   Container(
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           color: Colors.blue[100], 
                           shape: BoxShape.rectangle,
@@ -148,6 +153,11 @@ class _StartState extends State<Start> {
                                 box.put(0, m);
                                 box.put(1, 'ready');
                                 box.put(3, false);
+                                box.put(8, completed);
+                                box.put(9, running);
+                                box.put(10, result);
+                                box.put(11, true);
+                                box.put(12, DateTime.now());
                               } else {
                                 box.put(1, 'not-ready');
                               }
@@ -169,6 +179,7 @@ class _StartState extends State<Start> {
                       children: [
                         Flexible(child:
                           Container(
+                            padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
                               color: Colors.blue[100], 
                               shape: BoxShape.rectangle,
@@ -192,6 +203,7 @@ class _StartState extends State<Start> {
                         const SizedBox(width: 20,),
                         Flexible(child:
                         Container(
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Colors.blue[100], 
                             shape: BoxShape.rectangle,

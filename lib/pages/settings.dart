@@ -4,13 +4,12 @@ import 'index.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
-  
+
   @override
   State<Settings> createState() => _SettingsState();
 }
 
 class _SettingsState extends State<Settings> {
-  
   var box = Hive.box('medication');
   final TextEditingController _name = TextEditingController(text: '');
 
@@ -24,6 +23,15 @@ class _SettingsState extends State<Settings> {
 
   bool emp = false;
 
+  late List<bool> running;
+  late List<bool> completed;
+  late List<double> result;
+
+  late bool free;
+
+  late DateTime start = DateTime.now();
+  late DateTime end = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -32,200 +40,225 @@ class _SettingsState extends State<Settings> {
     help = box.get(4);
     vb = box.get(6);
     h = 0;
+    completed = box.get(8);
+    running = box.get(9);
+    result = box.get(10);
+    free = box.get(11);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: 
-        Container(
-          margin: const EdgeInsets.all(30),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Row(
                 children: [
                   Expanded(
-                    child:TextFormField(
-                    controller: _name,
-                    readOnly: rdo,
-                    decoration: const InputDecoration(labelText: 'Name'),
+                    child: TextFormField(
+                      controller: _name,
+                      readOnly: rdo,
+                      decoration: const InputDecoration(labelText: 'Name'),
                     ),
                   ),
                   Container(
-                    width: 120,
-                    decoration: BoxDecoration(
-                      color: rdo ?Colors.blue[100] : Colors.green[100], 
-                      shape: BoxShape.rectangle,
-                      borderRadius: const BorderRadius.all(Radius.circular(12.0))
-                    ),
-                    child: TextButton(onPressed: () {
-                        String input = _name.text;
-                        if(rdo) {
-                          setState(() {
-                            rdo = !rdo;
-                            emp = false;
-                          });
-                        }
-                        else if(input.isNotEmpty) {
-                          box.put(2,input);
-                          setState(() {
-                            rdo = !rdo;
-                            emp = false;
-                          });
-                        }
-                        else {
-                          setState(() {
-                            emp = true;
-                          });
-                        }
-                      }, 
-                      child: rdo ? const Text('Edit Name', style: TextStyle(color: Colors.black)) : const Text('Save', style: TextStyle(color: Colors.black))
-                    )
-                  )
+                      width: 120,
+                      decoration: BoxDecoration(
+                          color: rdo ? Colors.blue[100] : Colors.green[100],
+                          shape: BoxShape.rectangle,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12.0))),
+                      child: TextButton(
+                          onPressed: () {
+                            String input = _name.text;
+                            if (rdo) {
+                              setState(() {
+                                rdo = !rdo;
+                                emp = false;
+                              });
+                            } else if (input.isNotEmpty) {
+                              box.put(2, input);
+                              setState(() {
+                                rdo = !rdo;
+                                emp = false;
+                              });
+                            } else {
+                              setState(() {
+                                emp = true;
+                              });
+                            }
+                          },
+                          child: rdo
+                              ? const Text('Edit Name',
+                                  style: TextStyle(color: Colors.black))
+                              : const Text('Save',
+                                  style: TextStyle(color: Colors.black))))
                 ],
               ),
-              emp ? const Text(
-                'Please enter a valid name and save.',
-                style: TextStyle(fontSize: 12.0, color: Colors.red),
-              ) : const SizedBox(height:0),
-              const SizedBox(height: 20,),
+              emp
+                  ? const Text(
+                      'Please enter a valid name and save.',
+                      style: TextStyle(fontSize: 12.0, color: Colors.red),
+                    )
+                  : const SizedBox(height: 0),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Daily Reminder Notification', softWrap: true, maxLines: 2,),
-                const SizedBox(width: 10,),
-                Switch(
-                  value: notifications,
-                  onChanged: (value) {
-                    setState(() {
-
-                      notifications = value;
-                    });
-                    box.put(3, value);
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Display Help'),
-                const SizedBox(width: 10,),
-                Switch(
-                  value: help,
-                  onChanged: (value) {
-                    setState(() {
-                      help = value;
-                    });
-                    box.put(4, value);
-                  },
-                ),
-                const SizedBox(width: 10,),
-                IconButton(
-                  icon: const Icon(Icons.help_outline),
-                  tooltip: "Info",
-                  onPressed: () {
-                    h=0;
-                    _showDescriptionDialog(context);
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 10,),
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Browse-Page A/B'),
-                const SizedBox(width: 10,),
-                Switch(
-                  value: vb,
-                  onChanged: (value) {
-                    setState(() {
-                      vb = value;
-                    });
-                    box.put(6, value);
-                  },
-                ),
-                const SizedBox(width: 10,),
-                IconButton(
-                  icon: const Icon(Icons.help_outline),
-                  tooltip: "Info",
-                  onPressed: () {
-                    h=1;
-                    _showDescriptionDialog(context);
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 60,),
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.red[200], 
-                shape: BoxShape.rectangle,
-                borderRadius: const BorderRadius.all(Radius.circular(12.0))
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Daily Reminder Notification',
+                    softWrap: true,
+                    maxLines: 2,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Switch(
+                    value: notifications,
+                    onChanged: (value) {
+                      setState(() {
+                        notifications = value;
+                      });
+                      box.put(3, value);
+                    },
+                  ),
+                ],
               ),
-              child: TextButton(
-                onPressed: () {
-                  _showResetConfirmationDialog();
-                },
-                child: const Text('Reset', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)
+              const SizedBox(
+                height: 10,
               ),
-            )
-          ],
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Display Help'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Switch(
+                    value: help,
+                    onChanged: (value) {
+                      setState(() {
+                        help = value;
+                      });
+                      box.put(4, value);
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.help_outline),
+                    tooltip: "Info",
+                    onPressed: () {
+                      h = 0;
+                      _showDescriptionDialog(context);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Browse-Page A/B'),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Switch(
+                    value: vb,
+                    onChanged: (value) {
+                      setState(() {
+                        vb = value;
+                      });
+                      box.put(6, value);
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.help_outline),
+                    tooltip: "Info",
+                    onPressed: () {
+                      h = 1;
+                      _showDescriptionDialog(context);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              Container(
+                width: 200,
+                decoration: BoxDecoration(
+                    color: Colors.red[200],
+                    shape: BoxShape.rectangle,
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(12.0))),
+                child: TextButton(
+                    onPressed: () {
+                      _showResetConfirmationDialog();
+                    },
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    )),
+              )
+            ],
+          ),
         ),
-      ),
-        
       ),
     );
   }
 
   void _showResetConfirmationDialog() {
     showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Confirm Reset'),
-        content: const Text('Are you sure you want to reset? This action is not reversible.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              box.put(1, 'not-ready');
-              Navigator.of(context).pop();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Start(),
-                ),
-              );
-            },
-            child: const Text('Reset'),
-          ),
-        ],
-      );
-    },
-  );
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Reset'),
+          content: const Text(
+              'Are you sure you want to reset? This action is not reversible.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                box.put(1, 'not-ready');
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Start(),
+                  ),
+                );
+              },
+              child: const Text('Reset'),
+            ),
+          ],
+        );
+      },
+    );
   }
-
 
   void _showDescriptionDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        List<String> title = [
-          'Help',
-          'Browse Page Version'
-        ];
-
-
+        List<String> title = ['Help', 'Browse Page Version'];
 
         List<String> info = [
           'Help-Buttons (like this one) will appear throughout the App to provide Explanations.',
@@ -270,5 +303,4 @@ class _SettingsState extends State<Settings> {
       },
     );
   }
-
 }

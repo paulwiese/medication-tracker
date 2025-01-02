@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:medication_tracker/pages/experiment.dart';
 import 'index.dart';
 
 class Navigation extends StatefulWidget {
@@ -27,35 +28,53 @@ class NavigationState extends State<Navigation> {
         final bool vb = box.get(6, defaultValue: false);
 
         return Scaffold(
-          bottomNavigationBar: NavigationBar(
-            onDestinationSelected: (int index) {
-              setState(() {
-                currentPageIndex = index;
-              });
-            },
-            indicatorColor: Colors.blue[100],
-            selectedIndex: currentPageIndex,
-            destinations: const <Widget>[
-              NavigationDestination(
-                selectedIcon: Icon(Icons.home),
-                icon: Icon(Icons.home_outlined),
-                label: 'Home',
+          bottomNavigationBar: NavigationBarTheme(
+            data: NavigationBarThemeData(
+              iconTheme: WidgetStateProperty.all(
+                const IconThemeData(size: 20),
               ),
-              NavigationDestination(
-                icon: Icon(Icons.list),
-                label: 'All',
+              labelTextStyle: WidgetStateProperty.all(
+                const TextStyle(fontSize: 12),
               ),
-              NavigationDestination(icon: Icon(Icons.search), label: 'Browse'),
-              NavigationDestination(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-            ],
+            ),
+            child: NavigationBar(
+              onDestinationSelected: (int index) {
+                setState(() {
+                  currentPageIndex = index;
+                });
+              },
+              indicatorColor: Colors.blue[100],
+              selectedIndex: currentPageIndex,
+              destinations: const <Widget>[
+                NavigationDestination(
+                  selectedIcon: Icon(Icons.home),
+                  icon: Icon(Icons.home_outlined),
+                  label: 'Home',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.list),
+                  label: 'All',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.search),
+                  label: 'Browse',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.science_rounded),
+                  label: 'Test',
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.settings),
+                  label: 'Settings',
+                ),
+              ],
+            ),
           ),
           body: <Widget>[
             const Home(),
             const All(),
             vb ? const BrowseB() : const BrowseA(),
+            const Experiment(),
             const Settings(),
           ][currentPageIndex],
         );
