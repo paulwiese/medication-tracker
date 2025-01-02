@@ -28,8 +28,8 @@ class _TaskState extends State<Task> {
     'Task 1: Find out if the Skin Treatment "Clindamycin Gel" requires a prescription',
     'Task 2: Find a supplement that may help you with muscle relaxation.',
     'Task 3: A 55-year-old individual with a history of stomach ulcers has developed a mild headache. They need a pain reliever but must avoid any medication that could worsen their stomach condition. The individual prefers a prescription option. Please help to find a suitable medication.',
-    'Task 4: Look for an over the counter mental health medication (no prescription required).',
-    'Task 5: Find a medicatin that provides nighttime relief from cold and flu symptoms.',
+    'Task 4: Find out if there is an over the counter mental health medication (no prescription required).',
+    'Task 5: Find a medication that provides nighttime relief from cold and flu symptoms.',
   ];
 
   @override

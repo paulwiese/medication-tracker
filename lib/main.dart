@@ -15,15 +15,6 @@ void main() async {
 
   await Hive.openBox('medication');
 
-  FlutterError.onError = (FlutterErrorDetails details) {
-
-    FlutterError.presentError(details);
-
-    Future.microtask(() async {
-      await resetAppState();
-    });
-  };
-
   runZonedGuarded(() async {
     runApp(const MainApp());
   }, (Object error, StackTrace stack) {
