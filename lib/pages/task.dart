@@ -25,11 +25,11 @@ class _TaskState extends State<Task> {
   late DateTime end = DateTime.now();
 
   List<String> tasks = [
-    'Task 1: Find a pain relief medication that does not require a prescription. Add it to your medication plans.',
-    'Task 2: Find a pain relief medication that does not require a prescription. Add it to your medication plans.',
-    'Task 3: Find a pain relief medication that does not require a prescription. Add it to your medication plans.',
-    'Task 4: Find a pain relief medication that does not require a prescription. Add it to your medication plans.',
-    'Task 5: Find a pain relief medication that does not require a prescription. Add it to your medication plans.',
+    'Task 1: Find out if the Skin Treatment "Clindamycin Gel" requires a prescription',
+    'Task 2: Find a supplement that may help you with muscle relaxation.',
+    'Task 3: A 55-year-old individual with a history of stomach ulcers has developed a mild headache. They need a pain reliever but must avoid any medication that could worsen their stomach condition. The individual prefers a prescription option. Please help to find a suitable medication.',
+    'Task 4: Look for an over the counter mental health medication (no prescription required).',
+    'Task 5: Find a medicatin that provides nighttime relief from cold and flu symptoms.',
   ];
 
   @override

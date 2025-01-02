@@ -194,13 +194,23 @@ class _BrowseAState extends State<BrowseA> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
+                            builder: (context) => Scaffold(appBar: AppBar(), body: Info(
+                              id: filtered[index].id,
+                            ),
+                          )),
+
+                        );
+                        /*Navigator.push(
+                          context,
+                          MaterialPageRoute(
                             builder: (context) => DetailScreen(
                               id: filtered[index].id,
                               update: () {},
                               preview: true,
                             ),
                           ),
-                        );
+
+                        );*/
                       },
                       child: Card(
                         color: Colors.white,
@@ -208,18 +218,18 @@ class _BrowseAState extends State<BrowseA> {
                         child: ListTile(
                             leading: Container(
                               padding: const EdgeInsets.all(
-                                  6), // Add padding for better spacing
+                                  6),
                               decoration: BoxDecoration(
                                 color: _getCategoryColor(
-                                    filtered[index].category), // Dynamic color
+                                    filtered[index].category),
                                 borderRadius:
-                                    BorderRadius.circular(8), // Rounded corners
+                                    BorderRadius.circular(8),
                               ),
                               child: Icon(
                                 _getCategoryIcon(
-                                    filtered[index].category), // Dynamic icon
-                                color: Colors.white, // Icon color
-                                size: 24, // Icon size
+                                    filtered[index].category),
+                                color: Colors.white,
+                                size: 24,
                               ),
                             ),
                             title: Text(filtered[index].name),

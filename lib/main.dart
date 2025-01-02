@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'pages/index.dart';
@@ -13,7 +15,30 @@ void main() async {
 
   await Hive.openBox('medication');
 
-  runApp(const MainApp());
+  FlutterError.onError = (FlutterErrorDetails details) {
+
+    FlutterError.presentError(details);
+
+    Future.microtask(() async {
+      await resetAppState();
+    });
+  };
+
+  runZonedGuarded(() async {
+    runApp(const MainApp());
+  }, (Object error, StackTrace stack) {
+    resetAppState();
+  });
+
+}
+
+Future<void> resetAppState() async {
+  if (Hive.isBoxOpen('medication')) {
+    final box = Hive.box('medication');
+    await box.clear();
+  } else {
+    await Hive.openBox('medication');
+  }
 }
 
 class MainApp extends StatefulWidget {

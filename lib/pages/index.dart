@@ -8,3 +8,4 @@ export 'browse_a.dart';
 export 'browse_b.dart';
 export 'swipe.dart';
 export 'task.dart';
+export 'info.dart';

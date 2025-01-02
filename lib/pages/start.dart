@@ -36,84 +36,96 @@ class _StartState extends State<Start> {
     ];
 
     List<Medication> all = [
-      // Pain Relievers
-      Medication(id: 1, name: 'Ibuprofen', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 20, category: categories[0], prescription: false, info: 'Pain relief for headaches and inflammation'),
-      Medication(id: 2, name: 'Acetaminophen', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 20, category: categories[0], prescription: false, info: 'Relieves mild pain and reduces fever'),
-      Medication(id: 3, name: 'Aspirin', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 30, category: categories[0], prescription: false, info: 'Pain and inflammation relief, also used for heart health'),
-      Medication(id: 4, name: 'Naproxen', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 20, category: categories[0], prescription: false, info: 'Nonsteroidal anti-inflammatory drug for pain relief'),
-      Medication(id: 5, name: 'Diclofenac', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 25, category: categories[0], prescription: false, info: 'Anti-inflammatory drug for arthritis pain relief'),
+  
+      // **Pain Relievers**
+      Medication(id: 1, name: 'Ibuprofen', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[0], prescription: false, info: 'Common NSAID used for pain relief, inflammation, and fever. \n\nCan irritate the stomach, especially if taken without food. Long-term use increases the risk of ulcers or gastrointestinal bleeding.'),
+      Medication(id: 2, name: 'Acetaminophen', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 0, category: categories[0], prescription: false, info: 'Widely used for pain and fever relief. \n\nDoes not irritate the stomach, making it gentler on the digestive system compared to NSAIDs.'),
+      Medication(id: 3, name: 'Diclofenac', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[0], prescription: true, info: 'Prescription NSAID often used for arthritis and joint pain. \n\nMay cause stomach irritation, nausea, or ulcers, especially when used for extended periods or in high doses. Best taken with food to reduce stomach upset.'),
+      Medication(id: 4, name: 'Aspirin', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[0], prescription: false, info: 'NSAID for pain, fever, and inflammation relief. \n\nCan cause stomach irritation and increase the risk of ulcers, bleeding, and gastrointestinal issues, especially in long-term or high-dose use.'),
+      Medication(id: 5, name: 'Celecoxib', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[0], prescription: true, info: 'Prescription NSAID used to treat pain, especially for arthritis and other inflammatory conditions. \n\nLower risk of stomach irritation compared to traditional NSAIDs like ibuprofen or aspirin, but still can cause gastrointestinal issues in some people.'),
+      Medication(id: 6, name: 'Naproxen', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[0], prescription: false, info: 'NSAID used for pain relief and inflammation. \n\nCan cause stomach irritation, especially if taken without food. Long-term use may increase the risk of ulcers or gastrointestinal bleeding.'),
 
-      // Antibiotics
-      Medication(id: 6, name: 'Amoxicillin', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 30, category: categories[1], prescription: true, info: 'Antibiotic for bacterial infections'),
-      Medication(id: 7, name: 'Ciprofloxacin', active: false, cycle: 1, last: today, next: today, stock: 8, started: today, total: 20, category: categories[1], prescription: true, info: 'Used to treat urinary tract infections'),
-      Medication(id: 8, name: 'Clindamycin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 30, category: categories[1], prescription: true, info: 'Antibiotic for treating skin and soft tissue infections'),
-      Medication(id: 9, name: 'Doxycycline', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 20, category: categories[1], prescription: true, info: 'Used for treating respiratory and skin infections'),
-      Medication(id: 10, name: 'Azithromycin', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 25, category: categories[1], prescription: true, info: 'Antibiotic for bacterial infections of the lungs and respiratory system'),
-
-      // Allergy Relief
-      Medication(id: 11, name: 'Cetirizine', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 30, category: categories[2], prescription: false, info: 'Antihistamine for allergy relief'),
-      Medication(id: 12, name: 'Loratadine', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 30, category: categories[2], prescription: false, info: 'Relieves allergy symptoms like sneezing and runny nose'),
-      Medication(id: 13, name: 'Fexofenadine', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 30, category: categories[2], prescription: false, info: 'Used for seasonal allergies and hay fever'),
-      Medication(id: 14, name: 'Diphenhydramine', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 20, category: categories[2], prescription: false, info: 'Antihistamine for allergy relief and sleep aid'),
-      Medication(id: 15, name: 'Chlorpheniramine', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 25, category: categories[2], prescription: false, info: 'Relieves symptoms of hay fever and other allergies'),
-
-      // Cold and Flu Remedies
-      Medication(id: 16, name: 'Pseudoephedrine', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 40, category: categories[3], prescription: false, info: 'Decongestant for nasal congestion'),
-      Medication(id: 17, name: 'Oseltamivir', active: false, cycle: 1, last: today, next: today, stock: 5, started: today, total: 10, category: categories[3], prescription: true, info: 'Antiviral medication for flu treatment'),
-      Medication(id: 18, name: 'Guaifenesin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 30, category: categories[3], prescription: false, info: 'Expectorant for chest congestion'),
-      Medication(id: 19, name: 'DayQuil', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 15, category: categories[3], prescription: false, info: 'Relieves symptoms of cold and flu'),
-      Medication(id: 20, name: 'NyQuil', active: false, cycle: 1, last: today, next: today, stock: 8, started: today, total: 12, category: categories[3], prescription: false, info: 'Nighttime relief from cold and flu symptoms'),
-
-      // Digestive Health
-      Medication(id: 21, name: 'Loperamide', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 30, category: categories[4], prescription: false, info: 'Anti-diarrheal medication'),
-      Medication(id: 22, name: 'Omeprazole', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 20, category: categories[4], prescription: false, info: 'Proton pump inhibitor for acid reflux'),
-      Medication(id: 23, name: 'Pantoprazole', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 25, category: categories[4], prescription: false, info: 'For treating GERD and acid reflux'),
-      Medication(id: 24, name: 'Simethicone', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 30, category: categories[4], prescription: false, info: 'Anti-gas medication'),
-      Medication(id: 25, name: 'Probiotic Supplements', active: false, cycle: 1, last: today, next: today, stock: 50, started: today, total: 60, category: categories[4], prescription: false, info: 'Helps maintain healthy gut flora'),
-
-      // Heart Health
-      Medication(id: 26, name: 'Amlodipine', active: false, cycle: 1, last: today, next: today, stock: 22, started: today, total: 30, category: categories[5], prescription: true, info: 'Used to treat high blood pressure'),
-      Medication(id: 27, name: 'Atorvastatin', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 30, category: categories[5], prescription: true, info: 'Statin for lowering cholesterol levels'),
-      Medication(id: 28, name: 'Lisinopril', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 25, category: categories[5], prescription: true, info: 'ACE inhibitor for treating high blood pressure'),
-      Medication(id: 29, name: 'Furosemide', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 25, category: categories[5], prescription: true, info: 'Used for treating heart failure and swelling'),
-      Medication(id: 30, name: 'Ezetimibe', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 20, category: categories[5], prescription: true, info: 'Used to lower cholesterol levels'),
-
-      // Mental Health
-      Medication(id: 31, name: 'Sertraline', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 30, category: categories[6], prescription: true, info: 'Antidepressant for treating anxiety and depression'),
-      Medication(id: 32, name: 'Alprazolam', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 20, category: categories[6], prescription: true, info: 'Benzodiazepine for anxiety relief'),
-      Medication(id: 33, name: 'Escitalopram', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 25, category: categories[6], prescription: true, info: 'Selective serotonin reuptake inhibitor (SSRI) for anxiety and depression'),
-      Medication(id: 34, name: 'Fluoxetine', active: false, cycle: 1, last: today, next: today, stock: 14, started: today, total: 20, category: categories[6], prescription: true, info: 'Used to treat depression, panic attacks, and OCD'),
-      Medication(id: 35, name: 'Bupropion', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 30, category: categories[6], prescription: true, info: 'Used for treating depression and smoking cessation'),
-
-      // Diabetes Management
-      Medication(id: 36, name: 'Metformin', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 30, category: categories[7], prescription: true, info: 'Used to control blood sugar levels in type 2 diabetes'),
-      Medication(id: 37, name: 'Insulin Glargine', active: false, cycle: 1, last: today, next: today, stock: 5, started: today, total: 10, category: categories[7], prescription: true, info: 'Long-acting insulin for managing diabetes'),
-      Medication(id: 38, name: 'Glipizide', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 20, category: categories[7], prescription: true, info: 'Sulfonylurea medication used to treat type 2 diabetes'),
-      Medication(id: 39, name: 'Sitagliptin', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 30, category: categories[7], prescription: true, info: 'DPP-4 inhibitor for controlling blood sugar in diabetes'),
-      Medication(id: 40, name: 'Pioglitazone', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 25, category: categories[7], prescription: true, info: 'Used for managing type 2 diabetes by improving insulin sensitivity'),
-
-      // Skin Treatments
-      Medication(id: 41, name: 'Hydrocortisone', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 30, category: categories[8], prescription: false, info: 'Topical steroid for skin irritation and inflammation'),
-      Medication(id: 42, name: 'Neosporin', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 30, category: categories[8], prescription: false, info: 'Antibiotic ointment for cuts, scrapes, and burns'),
-      Medication(id: 43, name: 'Benzoyl Peroxide', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 25, category: categories[8], prescription: false, info: 'Treatment for acne and blemishes'),
-      Medication(id: 44, name: 'Tretinoin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 30, category: categories[8], prescription: true, info: 'Retinoid for acne treatment and reducing wrinkles'),
-      Medication(id: 45, name: 'Aloe Vera Gel', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 20, category: categories[8], prescription: false, info: 'Soothing gel for skin burns and irritation'),
-
-      // Sleep Aid
-      Medication(id: 46, name: 'Melatonin', active: false, cycle: 1, last: today, next: today, stock: 50, started: today, total: 60, category: categories[9], prescription: false, info: 'Hormone supplement to help with sleep'),
-      Medication(id: 47, name: 'Diphenhydramine', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 40, category: categories[9], prescription: false, info: 'Antihistamine used as a sleep aid'),
-      Medication(id: 48, name: 'Doxylamine', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 30, category: categories[9], prescription: false, info: 'Sedating antihistamine for short-term insomnia'),
-      Medication(id: 49, name: 'Zolpidem', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 20, category: categories[9], prescription: true, info: 'Prescription medication for insomnia'),
-      Medication(id: 50, name: 'Valerian Root', active: false, cycle: 1, last: today, next: today, stock: 40, started: today, total: 50, category: categories[9], prescription: false, info: 'Herbal supplement used to improve sleep'),
-
-      // Vitamins and Supplements
-      Medication(id: 51, name: 'Vitamin D3', active: false, cycle: 1, last: today, next: today, stock: 60, started: today, total: 60, category: categories[10], prescription: false, info: 'Supplement for bone health and immunity'),
-      Medication(id: 52, name: 'Vitamin C', active: false, cycle: 1, last: today, next: today, stock: 40, started: today, total: 50, category: categories[10], prescription: false, info: 'Boosts immune system and promotes skin health'),
-      Medication(id: 53, name: 'Multivitamins', active: false, cycle: 1, last: today, next: today, stock: 35, started: today, total: 50, category: categories[10], prescription: false, info: 'General health support and nutrient supplement'),
-      Medication(id: 54, name: 'Omega-3 Fish Oil', active: false, cycle: 1, last: today, next: today, stock: 45, started: today, total: 60, category: categories[10], prescription: false, info: 'Supports heart and brain health'),
-      Medication(id: 55, name: 'Probiotic Supplements', active: false, cycle: 1, last: today, next: today, stock: 50, started: today, total: 60, category: categories[10], prescription: false, info: 'Helps maintain healthy gut flora'),
-
-    ];
+      // **Antibiotics**
+      Medication(id: 7, name: 'Amoxicillin', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[1], prescription: true, info: 'Used to treat bacterial infections. Not suitable for individuals allergic to penicillin.'),
+      Medication(id: 8, name: 'Ciprofloxacin', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 0, category: categories[1], prescription: true, info: 'Antibiotic for treating various bacterial infections. Avoid taking with dairy products.'),
+      Medication(id: 9, name: 'Doxycycline', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 0, category: categories[1], prescription: true, info: 'Antibiotic for bacterial infections. Avoid exposure to sunlight as it can cause skin sensitivity.'),
+      Medication(id: 10, name: 'Azithromycin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[1], prescription: true, info: 'Antibiotic for treating respiratory infections. Should be used cautiously in people with liver disease.'),
+      Medication(id: 11, name: 'Clindamycin', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[1], prescription: true, info: 'Used to treat bacterial infections like skin and respiratory infections. Should not be used for viral infections.'),
+      Medication(id: 12, name: 'Metronidazole', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 0, category: categories[1], prescription: true, info: 'Antibiotic for infections caused by anaerobic bacteria. Avoid alcohol while taking it due to possible severe interactions.'),
+      
+      // **Allergy Relief**
+      Medication(id: 13, name: 'Cetirizine', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[2], prescription: false, info: 'Non-drowsy antihistamine for allergy relief. Suitable for daytime use.'),
+      Medication(id: 14, name: 'Loratadine', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[2], prescription: false, info: 'Relieves allergy symptoms like sneezing and runny nose. Rarely causes drowsiness.'),
+      Medication(id: 15, name: 'Diphenhydramine', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[2], prescription: false, info: 'Common antihistamine used for allergy relief. Can cause drowsiness; use caution while driving.'),
+      Medication(id: 16, name: 'Fexofenadine', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[2], prescription: false, info: 'Non-sedating antihistamine, ideal for daytime use. Suitable for seasonal allergies and hay fever.'),
+      Medication(id: 17, name: 'Chlorpheniramine', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[2], prescription: false, info: 'Used to relieve symptoms of hay fever and other allergies. Can cause drowsiness.'),
+      Medication(id: 18, name: 'Levocetirizine', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 0, category: categories[2], prescription: false, info: 'Effective antihistamine for allergy relief with fewer side effects compared to cetirizine.'),
+      
+      // **Cold and Flu Remedies**
+      Medication(id: 19, name: 'Pseudoephedrine', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[3], prescription: false, info: 'Decongestant for nasal congestion. Not suitable for individuals with high blood pressure or heart disease.'),
+      Medication(id: 20, name: 'Oseltamivir', active: false, cycle: 1, last: today, next: today, stock: 5, started: today, total: 0, category: categories[3], prescription: true, info: 'Antiviral medication for flu treatment. Best if taken within 48 hours of flu symptoms.'),
+      Medication(id: 21, name: 'Guaifenesin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[3], prescription: false, info: 'Expectorant for chest congestion. Helps loosen mucus for easier coughing.'),
+      Medication(id: 22, name: 'DayQuil', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 0, category: categories[3], prescription: false, info: 'Provides relief from cold and flu symptoms. Contains acetaminophen, so avoid exceeding the recommended dose.'),
+      Medication(id: 23, name: 'NyQuil', active: false, cycle: 1, last: today, next: today, stock: 8, started: today, total: 0, category: categories[3], prescription: false, info: 'Nighttime relief from cold and flu symptoms. Contains alcohol and can cause drowsiness.'),
+      Medication(id: 24, name: 'Zinc Lozenges', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 0, category: categories[3], prescription: false, info: 'May help reduce the duration of a cold. Do not exceed the recommended daily dose to avoid nausea.'),
+      
+      // **Digestive Health**
+      Medication(id: 25, name: 'Loperamide', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[4], prescription: false, info: 'Used to treat diarrhea. Not suitable for individuals with certain bacterial infections (e.g., C. difficile).'),
+      Medication(id: 26, name: 'Bismuth Subsalicylate', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[4], prescription: false, info: 'Helps treat upset stomach, nausea, and diarrhea. May cause stool to turn black, which is harmless.'),
+      Medication(id: 27, name: 'Docusate Sodium', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[4], prescription: false, info: 'Stool softener used to relieve constipation. Drink plenty of fluids while taking it.'),
+      Medication(id: 28, name: 'Lactulose', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[4], prescription: true, info: 'Used to treat constipation and liver disease-related complications. Not suitable for individuals with lactose intolerance.'),
+      Medication(id: 29, name: 'Metoclopramide', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 0, category: categories[4], prescription: true, info: 'Used to treat nausea and vomiting. Can cause drowsiness or dizziness.'),
+      Medication(id: 30, name: 'Omeprazole', active: false, cycle: 1, last: today, next: today, stock: 22, started: today, total: 0, category: categories[4], prescription: false, info: 'Proton pump inhibitor used to treat heartburn and acid reflux. Not suitable for long-term use without medical supervision.'),
+      
+      // **Heart Health**
+      Medication(id: 31, name: 'Amlodipine', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[5], prescription: true, info: 'Calcium channel blocker used to treat high blood pressure. Can cause swelling of the ankles and feet.'),
+      Medication(id: 32, name: 'Atorvastatin', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[5], prescription: true, info: 'Statin used to lower cholesterol levels. Monitor liver function while on this medication.'),
+      Medication(id: 33, name: 'Clopidogrel', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 0, category: categories[5], prescription: true, info: 'Blood thinner used to reduce the risk of heart attack or stroke. Avoid taking with NSAIDs.'),
+      Medication(id: 34, name: 'Losartan', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 0, category: categories[5], prescription: true, info: 'Angiotensin II receptor blocker used to treat high blood pressure and heart failure.'),
+      Medication(id: 35, name: 'Metoprolol', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[5], prescription: true, info: 'Beta blocker used to treat high blood pressure and heart issues. Can cause dizziness or fatigue.'),
+      Medication(id: 36, name: 'Ezetimibe', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[5], prescription: true, info: 'Used to lower cholesterol by reducing absorption. Often used alongside statins.'),
+      
+      // **Mental Health**
+      Medication(id: 37, name: 'Fluoxetine', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[6], prescription: true, info: 'Selective serotonin reuptake inhibitor (SSRI) used to treat depression and anxiety.'),
+      Medication(id: 38, name: 'Sertraline', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[6], prescription: true, info: 'SSRI used for depression and anxiety. May take 4-6 weeks to see full effects.'),
+      Medication(id: 39, name: 'Diazepam', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 0, category: categories[6], prescription: true, info: 'Benzodiazepine used for anxiety and muscle relaxation. Can be habit-forming.'),
+      Medication(id: 40, name: 'Bupropion', active: false, cycle: 1, last: today, next: today, stock: 8, started: today, total: 0, category: categories[6], prescription: true, info: 'Used for depression and smoking cessation. Can increase the risk of seizures in certain individuals.'),
+      Medication(id: 41, name: 'Mirtazapine', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 0, category: categories[6], prescription: true, info: 'Antidepressant that can also help with sleep and appetite. May cause drowsiness or weight gain.'),
+      Medication(id: 42, name: 'Trazodone', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[6], prescription: true, info: 'Used to treat depression and insomnia. May cause drowsiness and dizziness.'),
+      
+      // **Diabetes Management**
+      Medication(id: 43, name: 'Metformin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[7], prescription: true, info: 'First-line medication for type 2 diabetes. Can cause stomach upset or diarrhea.'),
+      Medication(id: 44, name: 'Insulin Glargine', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 0, category: categories[7], prescription: true, info: 'Long-acting insulin used to control blood sugar in diabetes.'),
+      Medication(id: 45, name: 'Glibenclamide', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[7], prescription: true, info: 'Sulfonylurea used to treat type 2 diabetes. Can cause low blood sugar levels.'),
+      Medication(id: 46, name: 'Sitagliptin', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[7], prescription: true, info: 'DPP-4 inhibitor used to control blood sugar. Can cause upper respiratory infections.'),
+      Medication(id: 47, name: 'Glimepiride', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[7], prescription: true, info: 'Sulfonylurea used to treat type 2 diabetes. Increases the risk of low blood sugar.'),
+      Medication(id: 48, name: 'Canagliflozin', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[7], prescription: true, info: 'SGLT-2 inhibitor used for blood sugar control in diabetes. Can increase the risk of urinary tract infections.'),
+      
+      // **Skin Treatments**
+      Medication(id: 49, name: 'Hydrocortisone', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[8], prescription: false, info: 'Topical steroid used to relieve itching, inflammation, and rashes. Avoid overuse to prevent skin thinning.'),
+      Medication(id: 50, name: 'Benzoyl Peroxide', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[8], prescription: false, info: 'Topical treatment for acne. Can cause dryness and irritation, so use with caution.'),
+      Medication(id: 51, name: 'Salicylic Acid', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[8], prescription: false, info: 'Used for acne treatment and exfoliation. Avoid excessive use as it can dry out the skin.'),
+      Medication(id: 52, name: 'Clindamycin Gel', active: false, cycle: 1, last: today, next: today, stock: 10, started: today, total: 0, category: categories[8], prescription: true, info: 'Topical antibiotic used for acne treatment. Avoid using with other acne treatments unless recommended by a doctor.'),
+      Medication(id: 53, name: 'Calamine Lotion', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 0, category: categories[8], prescription: false, info: 'Used for soothing itching and irritation caused by poison ivy, insect bites, and other skin conditions.'),
+      Medication(id: 54, name: 'Retinoid (Tretinoin)', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[8], prescription: true, info: 'Topical retinoid used for acne and reducing signs of aging. Can cause dryness and peeling.'),
+      Medication(id: 55, name: 'Aloe Vera Gel', active: false, cycle: 1, last: today, next: today, stock: 22, started: today, total: 0, category: categories[8], prescription: false, info: 'Used to soothe sunburns and skin irritations. Can be used daily to moisturize the skin.'),
+      
+      // **Sleep Aid**
+      Medication(id: 56, name: 'Melatonin', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 0, category: categories[9], prescription: false, info: 'Natural hormone that helps regulate sleep-wake cycles. Safe for short-term use but may cause drowsiness the next day.'),
+      Medication(id: 57, name: 'Diphenhydramine', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[9], prescription: false, info: 'Antihistamine with sedative properties, commonly used as a sleep aid. May cause dry mouth and drowsiness the next day.'),
+      Medication(id: 58, name: 'Zolpidem', active: false, cycle: 1, last: today, next: today, stock: 15, started: today, total: 0, category: categories[9], prescription: true, info: 'Prescribed sedative used to treat insomnia. Can cause drowsiness the next day, and should only be taken when you can get 7-8 hours of sleep.'),
+      Medication(id: 59, name: 'Eszopiclone', active: false, cycle: 1, last: today, next: today, stock: 20, started: today, total: 0, category: categories[9], prescription: true, info: 'Used for short-term treatment of insomnia. May cause a metallic taste and can impair memory if not used properly.'),
+      Medication(id: 60, name: 'Valerian Root', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[9], prescription: false, info: 'Herbal supplement used for anxiety and sleep. Mild sedative properties, but can cause drowsiness the next day.'),
+      Medication(id: 61, name: 'Trazodone', active: false, cycle: 1, last: today, next: today, stock: 12, started: today, total: 0, category: categories[9], prescription: true, info: 'An antidepressant also used off-label for sleep. It can cause drowsiness and is best taken before bed.'),
+      
+      // **Vitamins and Supplements**
+      Medication(id: 62, name: 'Vitamin D3', active: false, cycle: 1, last: today, next: today, stock: 50, started: today, total: 0, category: categories[10], prescription: false, info: 'Vitamin D supplement that supports bone health. Ideal for individuals with limited sun exposure.'),
+      Medication(id: 63, name: 'Vitamin B12', active: false, cycle: 1, last: today, next: today, stock: 40, started: today, total: 0, category: categories[10], prescription: false, info: 'Supports energy production and nerve function. Commonly taken by individuals with vitamin B12 deficiencies or vegans.'),
+      Medication(id: 64, name: 'Iron Supplements', active: false, cycle: 1, last: today, next: today, stock: 30, started: today, total: 0, category: categories[10], prescription: false, info: 'Used to treat iron-deficiency anemia. Can cause stomach upset or constipation; take with food if needed.'),
+      Medication(id: 65, name: 'Folic Acid', active: false, cycle: 1, last: today, next: today, stock: 25, started: today, total: 0, category: categories[10], prescription: false, info: 'Vitamin B9 supplement commonly used during pregnancy or to prevent neural tube defects.'),
+      Medication(id: 66, name: 'Magnesium', active: false, cycle: 1, last: today, next: today, stock: 18, started: today, total: 0, category: categories[10], prescription: false, info: 'Helps with muscle relaxation and sleep. Often used for leg cramps and overall muscle health.'),
+      Medication(id: 67, name: 'Probiotic Supplement', active: false, cycle: 1, last: today, next: today, stock: 22, started: today, total: 0, category: categories[10], prescription: false, info: 'Supports gut health by replenishing beneficial bacteria. Can help with digestive issues and immune function.'),
+];
     
     List<bool> running = [false, false, false, false, false];
     List<bool> completed = [false, false, false, false, false];
@@ -200,6 +212,7 @@ class _StartState extends State<Start> {
                             )
                           ),
                         ),
+                        /*
                         const SizedBox(width: 20,),
                         Flexible(child:
                         Container(
@@ -227,31 +240,6 @@ class _StartState extends State<Start> {
                               }
 
 
-                              /*
-                              List<Medication> medication = [
-
-                                Medication(id: 0, name: 'Vitamin A', active: true, cycle: 7, last: past[20], next: past[13], stock: 9, started: past[30], total: 1),
-                                Medication(id: 1, name: 'Vitamin B', active: false, cycle: 7, last: past[18], next: past[11], stock: 0, started: past[30], total: 2),
-                                Medication(id: 2, name: 'Vitamin C', active: true, cycle: 7, last: past[17], next: past[10], stock: 4, started: past[30], total: 3),
-                                Medication(id: 3, name: 'Vitamin D', active: true, cycle: 7, last: past[10], next: past[3], stock: 24, started: past[30], total: 4),
-                                Medication(id: 4, name: 'Vitamin E', active: false, cycle: 7, last: past[8], next: past[1], stock: 2, started: past[30], total: 3),
-                                Medication(id: 5, name: 'Vitamin F', active: true, cycle: 7, last: past[7], next: past[0], stock: 14, started: past[30], total: 2),
-                                
-                                Medication(id: 6, name: 'Vitamin G', active: true, cycle: 7, last: past[7], next: past[0], stock: 4, started: past[30], total: 4),
-                                Medication(id: 7, name: 'Vitamin H', active: true, cycle: 7, last: past[7], next: past[0], stock: 18, started: past[30], total: 5),
-                                Medication(id: 8, name: 'Vitamin I', active: true, cycle: 7, last: past[7], next: past[0], stock: 17, started: past[30], total: 5),
-                                Medication(id: 9, name: 'Vitamin J', active: false, cycle: 7, last: past[7], next: past[0], stock: 19, started: past[30], total: 4),
-                                Medication(id: 10, name: 'Vitamin K', active: true, cycle: 7, last: past[7], next: past[0], stock: 6, started: past[30], total: 3),
-                                Medication(id: 11, name: 'Vitamin L', active: false, cycle: 7, last: past[7], next: past[0], stock: 11, started: past[30], total: 3),
-
-                                Medication(id: 12, name: 'Vitamin M', active: false, cycle: 7, last: past[6], next: future[1], stock: 34, started: past[30], total: 4),
-                                Medication(id: 13, name: 'Vitamin N', active: true, cycle: 7, last: past[4], next: future[3], stock: 7, started: past[30], total: 4),
-                                Medication(id: 14, name: 'Vitamin O', active: true, cycle: 7, last: past[3], next: future[4], stock: 12, started: past[30], total: 4),
-                                Medication(id: 15, name: 'Vitamin P', active: true, cycle: 7, last: past[2], next: future[5], stock: 3, started: past[30], total: 5),
-                                Medication(id: 16, name: 'Vitamin Q', active: false, cycle: 7, last: past[1], next: future[6], stock: 0, started: past[30], total: 6),
-
-                              ];
-                              */
 
                               List<Medication> medication = [
                                 Medication(id: 0, name: 'Vitamin A 5000 IU', active: true, cycle: 7, last: past[2], next: future[5], stock: 12, started: past[30], total: 3, category: 'any', prescription: false, info: '--- Medication Info ---'),
@@ -300,7 +288,7 @@ class _StartState extends State<Start> {
                             }
                             , child: const Text('Test with sample data', style: TextStyle(color: Colors.black), softWrap: true, maxLines: 2, overflow: TextOverflow.ellipsis,)
                           )
-                        ),)
+                        ),)*/
                       ],
                     )
                   : const SizedBox(

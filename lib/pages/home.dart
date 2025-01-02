@@ -203,7 +203,7 @@ class _TodayListState extends State<_TodayList> {
       child: const SizedBox(
         width: double.infinity,
         height: 40,
-        child: Align(alignment: Alignment.center, child: Text('No further medication sceduled for today 🙂'))
+        child: Align(alignment: Alignment.center, child: Text('No further medication scheduled for today 🙂'))
       )
     )
     : ListView.builder(
