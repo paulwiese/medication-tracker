@@ -109,7 +109,7 @@ class _InfoState extends State<Info> {
                         x.id = maxID;
                         box.put(7, maxID);
 
-                        List<Medication> meds = box.get(0);
+                        List<Medication> meds = List<Medication>.from(box.get(0));
                         meds.add(x);
 
                         box.put(0, meds);

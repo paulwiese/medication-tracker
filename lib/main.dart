@@ -15,12 +15,27 @@ void main() async {
 
   await Hive.openBox('medication');
 
-  runZonedGuarded(() async {
-    runApp(const MainApp());
-  }, (Object error, StackTrace stack) {
-    resetAppState();
-  });
+  await handleDateTimeField();
 
+  runApp(const MainApp());
+
+}
+
+Future<void> handleDateTimeField() async {
+  final box = Hive.box('medication');
+  final lastSupportedDate = DateTime(2024, 01, 04);
+
+  try {
+    final lastUpdated = box.get('lastUpdated') as DateTime?;
+
+    if (lastUpdated == null || lastUpdated.isBefore(lastSupportedDate)) {
+      await resetAppState();
+    }
+  } catch (e) {
+    await resetAppState();
+  }
+
+  await box.put('lastUpdated', DateTime.now());
 }
 
 Future<void> resetAppState() async {
