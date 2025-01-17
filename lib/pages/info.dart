@@ -27,7 +27,7 @@ class _InfoState extends State<Info> {
   @override
   void initState() {
     super.initState();
-    box = Hive.box('medication'); // Open the Hive box
+    box = Hive.box('medication');
 
     all = List<Medication>.from(box.get(5));
 

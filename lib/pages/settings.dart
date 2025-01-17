@@ -49,18 +49,17 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-
     int completedA = completed
-            .asMap()
-            .entries
-            .where((entry) => entry.key % 2 == 0 && entry.value)
-            .length;
+        .asMap()
+        .entries
+        .where((entry) => entry.key % 2 == 0 && entry.value)
+        .length;
 
-          int completedB = completed
-            .asMap()
-            .entries
-            .where((entry) => entry.key % 2 == 1 && entry.value)
-            .length;
+    int completedB = completed
+        .asMap()
+        .entries
+        .where((entry) => entry.key % 2 == 1 && entry.value)
+        .length;
 
     return Scaffold(
       body: Center(
@@ -211,58 +210,64 @@ class _SettingsState extends State<Settings> {
                 height: 30,
               ),
               Row(children: [
-              const Text('Version-A: ', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13)),
-              Text(
-                '$completedA/3 tasks completed',
-                style: TextStyle(
-                    color: completedA == 3 ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15),
-              ),
+                const Text('Version-A: ',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13)),
+                Text(
+                  '$completedA/4 tasks completed',
+                  style: TextStyle(
+                      color: completedA == 4 ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
               ]),
               const SizedBox(
                 height: 20,
               ),
               Row(children: [
-              const Text('Version-B: ', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13),),
-              Text(
-                '$completedB/3 tasks completed',
-                style: TextStyle(
-                    color: completedB == 3 ? Colors.green : Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15),
-              ),
+                const Text(
+                  'Version-B: ',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13),
+                ),
+                Text(
+                  '$completedB/4 tasks completed',
+                  style: TextStyle(
+                      color: completedB == 4 ? Colors.green : Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
               ]),
               const SizedBox(
                 height: 20,
               ),
               Row(children: [
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    color: completedA + completedB == 6 ? Colors.green[100] : Colors.grey[350],
-                    shape: BoxShape.rectangle,
-                    borderRadius:
-                        const BorderRadius.all(Radius.circular(12.0))),
-                child: TextButton(
-                    onPressed: () {
-                      if (completedA + completedB == 6) {
-                        _showLogViewer();
-                      }
-                    },
-                    child: const Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Text(
-                          'Export',
-                          style: TextStyle(color: Colors.black),
-                        ))),
-              ),
+                Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: completedA + completedB == 8
+                          ? Colors.green[100]
+                          : Colors.grey[350],
+                      shape: BoxShape.rectangle,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12.0))),
+                  child: TextButton(
+                      onPressed: () {
+                        if (completedA + completedB == 8) {
+                          _showLogViewer();
+                        }
+                      },
+                      child: const Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            'Export',
+                            style: TextStyle(color: Colors.black),
+                          ))),
+                ),
               ]),
               const SizedBox(
                 height: 40,
@@ -296,17 +301,15 @@ class _SettingsState extends State<Settings> {
 
     List<double> result = box.get(10);
 
-    for(int i = 0; i < result.length; i+=2) {
+    for (int i = 0; i < result.length; i += 2) {
       logText += '\n${result[i].toStringAsFixed(3)}';
     }
-    
+
     logText += '\n';
 
-    for(int i = 1; i < result.length; i+=2) {
+    for (int i = 1; i < result.length; i += 2) {
       logText += '\n${result[i].toStringAsFixed(3)}';
     }
-
-
 
     showDialog(
       context: context,

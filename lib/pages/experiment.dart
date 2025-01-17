@@ -53,17 +53,15 @@ class _ExperimentState extends State<Experiment> {
               children: [
                 Text(
                   'Please complete all tasks using Browse-Page ${vb ? 'Version-B:\nCategory Tiles + Swipe View' : 'Version-A:\nAlphabetical List + Category Filters'}',
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 15),
+                  style: const TextStyle(color: Colors.black, fontSize: 15),
                 ),
                 const SizedBox(height: 20),
                 Row(
                   children: [
                     Text(
-                      '$c/3 tasks completed',
+                      '$c/4 tasks completed',
                       style: TextStyle(
-                          color: c == 3 ? Colors.green : Colors.red,
+                          color: c == 4 ? Colors.green : Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
@@ -77,6 +75,8 @@ class _ExperimentState extends State<Experiment> {
                 const SizedBox(height: 20),
                 vb ? const Task(t: 5) : const Task(t: 4),
                 const SizedBox(height: 20),
+                vb ? const Task(t: 7) : const Task(t: 6),
+                const SizedBox(height: 20),
               ],
             ),
           );
@@ -85,42 +85,4 @@ class _ExperimentState extends State<Experiment> {
     );
   }
 
-  void _showLogViewer() {
-    String logText = '${box.get(2)}\n${box.get(6) ? 'Version-B' : 'Version-A'}';
-
-    List<double> result = box.get(10);
-
-    for (int i = 0; i < result.length; i++) {
-      logText += '\n${result[i].toStringAsFixed(3)}';
-    }
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Experiment Log'),
-          content: SingleChildScrollView(
-            child: Text(
-              logText,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Clipboard.setData(ClipboardData(text: logText));
-              },
-              child: const Text('Copy to Clipboard'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }

@@ -29,15 +29,16 @@ class _TaskState extends State<Task> {
   List<String> tasks = [
     'Find out if Guaifenesin(Flu remedy) requires a prescription.',
     'Find out if Salicyclic Acid(Skin Treatment) requires a prescription.',
-    'Find out how many Pain Relievers require a prescription and how many do not.',
-    'Find out how many Sleed Aids require a prescription and how many do not.',
-    'Find a Digestive Health medication used to treat nausea and vomiting.',
+    'Find out how many Pain Relievers require a prescription.',
+    'Find out how many Sleed Aids require a prescription.',
     'Find a Mental Health medication that can also be used for smoking cessation.',
+    'Find a Digestive Health medication used to treat nausea and vomiting.',
+    'Find an Antibiotic used to treat skin infections.',
+    'Find an Allergy Relief medication used to relief symptons of Hay fever.'
   ];
 
   @override
   void initState() {
-
     super.initState();
     box = Hive.box('medication'); // Open the Hive box
 
@@ -60,10 +61,9 @@ class _TaskState extends State<Task> {
 
   @override
   Widget build(BuildContext context) {
+    int n = (t ~/ 2) + (t % 2) + 1;
 
-    int n = (t~/2) + (t%2) + 1;    
-
-    n = vb ? n-1 : n;
+    n = vb ? n - 1 : n;
 
     return Container(
         child: Column(
@@ -87,7 +87,8 @@ class _TaskState extends State<Task> {
                         completed[t] = true;
                         free = true;
                         end = DateTime.now();
-                        result[t] = end.difference(start).inMilliseconds * 0.001;
+                        result[t] =
+                            end.difference(start).inMilliseconds * 0.001;
                       } else {
                         start = DateTime.now();
                         free = false;

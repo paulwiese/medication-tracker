@@ -127,9 +127,9 @@ class _StartState extends State<Start> {
       Medication(id: 67, name: 'Probiotic Supplement', active: true, cycle: 1, last: today, next: today, stock: 22, started: today, total: 0, category: categories[10], prescription: false, info: 'Supports gut health by replenishing beneficial bacteria. Can help with digestive issues and immune function.'),
 ];
     
-    List<bool> running = [false, false, false, false, false, false];
-    List<bool> completed = [false, false, false, false, false, false];
-    List<double> result = [0,0,0,0,0,0];
+    List<bool> running = [false, false, false, false, false, false, false, false];
+    List<bool> completed = [false, false, false, false, false, false, false, false];
+    List<double> result = [0,0,0,0,0,0,0,0];
 
     return Scaffold(
         body: Center(
