@@ -11,11 +11,13 @@ class Experiment extends StatefulWidget {
 
 class _ExperimentState extends State<Experiment> {
   late final Box box;
+  late bool vb;
 
   @override
   void initState() {
     super.initState();
     box = Hive.box('medication');
+    vb = box.get(6);
   }
 
   @override
@@ -28,53 +30,53 @@ class _ExperimentState extends State<Experiment> {
         valueListenable: box.listenable(keys: [8]),
         builder: (context, Box box, _) {
           List<bool> completed =
-              box.get(8, defaultValue: List<bool>.filled(5, false));
-          int completedCount = completed.where((task) => task).length;
+              box.get(8, defaultValue: List<bool>.filled(6, false));
+
+          int completedA = completed
+              .asMap()
+              .entries
+              .where((entry) => entry.key % 2 == 0 && entry.value)
+              .length;
+
+          int completedB = completed
+              .asMap()
+              .entries
+              .where((entry) => entry.key % 2 == 1 && entry.value)
+              .length;
+
+          int c = vb ? completedB : completedA;
 
           return SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'Please complete all tasks using Browse-Page ${vb ? 'Version-B:\nCategory Tiles + Swipe View' : 'Version-A:\nAlphabetical List + Category Filters'}',
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15),
+                ),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     Text(
-                      '$completedCount/${completed.length} tasks completed',
+                      '$c/3 tasks completed',
                       style: TextStyle(
-                          color: completedCount == completed.length
-                              ? Colors.green
-                              : Colors.red,
+                          color: c == 3 ? Colors.green : Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 15),
                     ),
                     const SizedBox(width: 10),
-                    Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                            color: completedCount == completed.length
-                              ? Colors.green[100]
-                              : Colors.grey[350],
-                            shape: BoxShape.rectangle,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12.0))),
-                        child: TextButton(
-                            onPressed: () {if(completedCount == completed.length) {_showLogViewer();}},
-                            child: const Padding(padding: EdgeInsets.all(5), child: Text(
-                              'Export',
-                              style: TextStyle(color: Colors.black),
-                            ))),)
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Task(t: 0),
+                vb ? const Task(t: 1) : const Task(t: 0),
                 const SizedBox(height: 20),
-                const Task(t: 1),
+                vb ? const Task(t: 3) : const Task(t: 2),
                 const SizedBox(height: 20),
-                const Task(t: 2),
+                vb ? const Task(t: 5) : const Task(t: 4),
                 const SizedBox(height: 20),
-                const Task(t: 3),
-                const SizedBox(height: 20),
-                const Task(t: 4),
               ],
             ),
           );
@@ -88,10 +90,10 @@ class _ExperimentState extends State<Experiment> {
 
     List<double> result = box.get(10);
 
-    for(int i = 0; i < result.length; i++) {
+    for (int i = 0; i < result.length; i++) {
       logText += '\n${result[i].toStringAsFixed(3)}';
     }
-    
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

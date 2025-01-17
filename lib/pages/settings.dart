@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'index.dart';
+import 'package:flutter/services.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -48,6 +49,19 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+
+    int completedA = completed
+            .asMap()
+            .entries
+            .where((entry) => entry.key % 2 == 0 && entry.value)
+            .length;
+
+          int completedB = completed
+            .asMap()
+            .entries
+            .where((entry) => entry.key % 2 == 1 && entry.value)
+            .length;
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -194,7 +208,64 @@ class _SettingsState extends State<Settings> {
                 ],
               ),
               const SizedBox(
-                height: 60,
+                height: 30,
+              ),
+              Row(children: [
+              const Text('Version-A: ', style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13)),
+              Text(
+                '$completedA/3 tasks completed',
+                style: TextStyle(
+                    color: completedA == 3 ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              ]),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(children: [
+              const Text('Version-B: ', style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13),),
+              Text(
+                '$completedB/3 tasks completed',
+                style: TextStyle(
+                    color: completedB == 3 ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+              ]),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(children: [
+              Container(
+                width: 100,
+                decoration: BoxDecoration(
+                    color: completedA + completedB == 6 ? Colors.green[100] : Colors.grey[350],
+                    shape: BoxShape.rectangle,
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(12.0))),
+                child: TextButton(
+                    onPressed: () {
+                      if (completedA == 6) {
+                        _showLogViewer();
+                      }
+                    },
+                    child: const Padding(
+                        padding: EdgeInsets.all(5),
+                        child: Text(
+                          'Export',
+                          style: TextStyle(color: Colors.black),
+                        ))),
+              ),
+              ]),
+              const SizedBox(
+                height: 40,
               ),
               Container(
                 width: 200,
@@ -217,6 +288,53 @@ class _SettingsState extends State<Settings> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showLogViewer() {
+    String logText = '${box.get(2)}\n';
+
+    List<double> result = box.get(10);
+
+    for(int i = 0; i < result.length; i+=2) {
+      logText += '\n${result[i].toStringAsFixed(3)}';
+    }
+    
+    logText += '\n';
+
+    for(int i = 1; i < result.length; i+=2) {
+      logText += '\n${result[i].toStringAsFixed(3)}';
+    }
+
+
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Experiment Log'),
+          content: SingleChildScrollView(
+            child: Text(
+              logText,
+              style: const TextStyle(fontSize: 14),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: logText));
+              },
+              child: const Text('Copy to Clipboard'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -263,8 +381,6 @@ class _SettingsState extends State<Settings> {
         List<String> info = [
           'Help-Buttons (like this one) will appear throughout the App to provide Explanations.',
           'Choose which version of the Browse-Page to use.\n\nVersion-A: Alphabetical list + Filters\n\nVersion-B: Swipe through medications of selected category horizontally.'
-          //Version-A: alphabetically ordered list; search-bar; filters
-          //Version-B: choose category and swipe through medications horizontally
         ];
 
         return Dialog(

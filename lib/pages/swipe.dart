@@ -20,6 +20,8 @@ class SwipeState extends State<Swipe> {
 
   List<Medication> all = [];
 
+  final PageController _pageController = PageController();
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +34,32 @@ class SwipeState extends State<Swipe> {
 
   void update() {
 
+  }
+
+  void _goToPreviousPage() {
+    if (currentPageIndex > 0) {
+      setState(() {
+        currentPageIndex--;
+      });
+      _pageController.animateToPage(
+        currentPageIndex,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _goToNextPage() {
+    if (currentPageIndex < all.length - 1) {
+      setState(() {
+        currentPageIndex++;
+      });
+      _pageController.animateToPage(
+        currentPageIndex,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   Color _getCategoryColor(String category) {
@@ -65,17 +93,47 @@ class SwipeState extends State<Swipe> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(category),
-      ),
-      body: PageView.builder(
-          itemCount: all.length,
-          itemBuilder: (context, index) {
-            Medication m = all[index];
-
-            return Info(id: m.id,);
-          }),
-    );
-  }
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(category),
+    ),
+    body: Column(
+      children: [
+        Expanded(
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: all.length,
+            onPageChanged: (index) {
+              setState(() {
+                currentPageIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              Medication m = all[index];
+              return Info(id: m.id);
+            },
+          ),
+        ),
+        Padding(
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+      child:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: _goToPreviousPage,
+              icon: const Icon(Icons.arrow_back_ios_new),
+              tooltip: 'Previous',
+            ),
+            IconButton(
+              onPressed: _goToNextPage,
+              icon: const Icon(Icons.arrow_forward_ios),
+              tooltip: 'Next',
+            ),
+          ],
+        ),)
+      ],
+    ),
+  );
 }
+  }

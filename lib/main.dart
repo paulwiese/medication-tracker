@@ -14,7 +14,7 @@ void main() async {
   Hive.registerAdapter(MedicationAdapter());
 
   await Hive.openBox('medication');
-
+  
   await handleDateTimeField();
 
   runApp(const MainApp());
@@ -26,7 +26,7 @@ Future<void> handleDateTimeField() async {
   final lastSupportedDate = DateTime(2024, 01, 04);
 
   try {
-    final lastUpdated = box.get('lastUpdated') as DateTime?;
+    final lastUpdated = box.get(13) as DateTime?;
 
     if (lastUpdated == null || lastUpdated.isBefore(lastSupportedDate)) {
       await resetAppState();
@@ -35,7 +35,7 @@ Future<void> handleDateTimeField() async {
     await resetAppState();
   }
 
-  await box.put('lastUpdated', DateTime.now());
+  await box.put(13, DateTime.now());
 }
 
 Future<void> resetAppState() async {

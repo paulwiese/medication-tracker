@@ -21,25 +21,31 @@ class _TaskState extends State<Task> {
 
   late bool free;
 
+  late bool vb;
+
   late DateTime start = DateTime.now();
   late DateTime end = DateTime.now();
 
   List<String> tasks = [
-    'Task 1: Find out if the Skin Treatment "Clindamycin Gel" requires a prescription',
-    'Task 2: Find a supplement that may help you with muscle relaxation.',
-    'Task 3: A 55-year-old individual with a history of stomach ulcers has developed a mild headache. They need a pain reliever but must avoid any medication that could worsen their stomach condition. The individual prefers a prescription option. Please help to find a suitable medication.',
-    'Task 4: Find out if there is an over the counter mental health medication (no prescription required).',
-    'Task 5: Find a medication that provides nighttime relief from cold and flu symptoms.',
+    'Find out if Guaifenesin(Flu remedy) requires a prescription.',
+    'Find out if Salicyclic Acid(Skin Treatment) requires a prescription.',
+    'Find out how many Pain Relievers require a prescription and how many do not.',
+    'Find out how many Sleed Aids require a prescription and how many do not.',
+    'Find a Digestive Health medication used to treat nausea and vomiting.',
+    'Find a Mental Health medication that can also be used for smoking cessation.',
   ];
 
   @override
   void initState() {
+
     super.initState();
     box = Hive.box('medication'); // Open the Hive box
 
     t = widget.t;
 
     update();
+
+    vb = box.get(6);
   }
 
   update() {
@@ -54,6 +60,11 @@ class _TaskState extends State<Task> {
 
   @override
   Widget build(BuildContext context) {
+
+    int n = (t~/2) + (t%2) + 1;    
+
+    n = vb ? n-1 : n;
+
     return Container(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,11 +85,9 @@ class _TaskState extends State<Task> {
                       running[t] = !running[t];
                       if (!running[t]) {
                         completed[t] = true;
-                        result[t] = 1.0;
                         free = true;
                         end = DateTime.now();
-                        result[t] =
-                            end.difference(start).inMilliseconds * 0.001;
+                        result[t] = end.difference(start).inMilliseconds * 0.001;
                       } else {
                         start = DateTime.now();
                         free = false;
@@ -93,9 +102,9 @@ class _TaskState extends State<Task> {
                   }
                 },
                 child: !running[t]
-                    ? Text('Start T${t + 1}',
+                    ? Text('Start ${vb ? 'B' : 'A'}$n',
                         style: const TextStyle(color: Colors.black))
-                    : Text('Finish T${t + 1}',
+                    : Text('Finish ${vb ? 'B' : 'A'}$n',
                         style: const TextStyle(color: Colors.black)),
               ),
             ),
