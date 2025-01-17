@@ -252,7 +252,7 @@ class _SettingsState extends State<Settings> {
                         const BorderRadius.all(Radius.circular(12.0))),
                 child: TextButton(
                     onPressed: () {
-                      if (completedA == 6) {
+                      if (completedA + completedB == 6) {
                         _showLogViewer();
                       }
                     },
