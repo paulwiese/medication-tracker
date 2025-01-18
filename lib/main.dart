@@ -20,7 +20,7 @@ void main() async {
 
 Future<void> handleDateTimeField() async {
   final box = Hive.box('medication');
-  final lastSupportedDate = DateTime(2024, 01, 18);
+  final lastSupportedDate = DateTime(2024, 01, 17);
 
   try {
     final lastUpdated = box.get(13) as DateTime?;
