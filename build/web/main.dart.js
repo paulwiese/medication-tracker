@@ -84091,7 +84091,7 @@ A.adm.prototype={
 $2(a,b){return new A.my(this.a.r[b].d,null)},
 $S:517}
 A.i6.prototype={
-a4(){return new A.Vn(A.b(["Find out if Guaifenesin(Flu remedy) requires a prescription.","Find out if Salicyclic Acid(Skin Treatment) requires a prescription.","Find out how many Pain Relievers require a prescription.","Find out how many Sleed Aids require a prescription.","Find a Mental Health medication that can also be used for smoking cessation.","Find a Digestive Health medication used to treat nausea and vomiting.","Find an Antibiotic used to treat skin infections.","Find an Allergy Relief medication used to relief symptons of Hay fever."],t.s))}}
+a4(){return new A.Vn(A.b(["Find out if Guaifenesin(Flu remedy) requires a prescription.","Find out if Salicyclic Acid(Skin Treatment) requires a prescription.","Find out how many Pain Relievers require a prescription.","Find out how many Sleep Aids require a prescription.","Find a Mental Health medication that can also be used for smoking cessation.","Find a Digestive Health medication used to treat nausea and vomiting.","Find an Antibiotic used to treat skin infections.","Find an Allergy Relief medication used to relief symptons of Hay fever."],t.s))}}
 A.Vn.prototype={
 gje(a){var s=this.z
 return s===$?this.z=new A.bg(Date.now(),0,!1):s},

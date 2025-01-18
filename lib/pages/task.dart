@@ -30,7 +30,7 @@ class _TaskState extends State<Task> {
     'Find out if Guaifenesin(Flu remedy) requires a prescription.',
     'Find out if Salicyclic Acid(Skin Treatment) requires a prescription.',
     'Find out how many Pain Relievers require a prescription.',
-    'Find out how many Sleed Aids require a prescription.',
+    'Find out how many Sleep Aids require a prescription.',
     'Find a Mental Health medication that can also be used for smoking cessation.',
     'Find a Digestive Health medication used to treat nausea and vomiting.',
     'Find an Antibiotic used to treat skin infections.',
